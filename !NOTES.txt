@@ -1,0 +1,27 @@
+CAMPAIGN SHEET
+I: CITY/MISSION/CHARACTERS (1)
+II: CITY/MISSION/CHARACTERS (1 OLD + 1)
+III: CITY/MISSION/CHARACTERS (2 OLD + 1)
+IV: CITY (1 SAVED)/MISSION/CHARACTERS (3 OLD)
+
+CITY:
+- Name
+- Tiles?
+- Ability?
+
+MISSION:
+- Name
+
+CHARACTERS:
+- Name
+- If upgraded
+
+///-----------///
+
+TODO
+- JSON of all city/mission/character data
+- Simple UI:
+    - Generate new campaign button
+    - Then the list of the whats
+- Learn if can use local browser save campaign progress?
+- Turn off privacy_file_unique_origin in about:config after done

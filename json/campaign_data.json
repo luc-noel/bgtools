@@ -1,0 +1,18 @@
+{
+    "cities":
+    [
+        {"name":"Roswell", "unlock":0},
+        {"name":"New York", "unlock":0},
+        {"name":"Washington, D.C.", "unlock":0}
+    ],
+    "characters":
+    [
+        {"name":"", "upgraded":false, "unlock":1},
+        {"name":"", "upgraded":false, "unlock":1}
+    ],
+    "missions":
+    [
+        {"name":"", "unlock":1},
+        {"name":"", "unlock":1}
+    ]
+}

@@ -19,9 +19,21 @@ CHARACTERS:
 ///-----------///
 
 TODO
-- JSON of all city/mission/character data
 - Simple UI:
-    - Generate new campaign button
     - Then the list of the whats
+- Single game generator
+    - Calculate star score
+        - Characters unupgraded -0.5, upgraded -1
+        - Destroyed city -0.5
+        - Mission +1
+        - Tiles +0-2
+    - Low/medium/high intensity? And custom setting
+    - Toggle for using characters/mission/destroyed city or not
+    - Maximum difficulty: 8 (all flipped high level tiles, no help)
+- Campaign generator
+    - Add visualisation of tile flipping next to battle details
+        - Threat level picker
 - Learn if can use local browser save campaign progress?
 - Turn off privacy_file_unique_origin in about:config after done
+- Add credits for game design & ownership
+- Match checkbox style to radio style in widgets.css

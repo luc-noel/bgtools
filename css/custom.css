@@ -10,6 +10,122 @@
   width: 240px;
 }
 
+/* Tooltip container */
+.custom-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.custom-tooltip .tooltiptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: #dadada;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  bottom: 100%;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.custom-tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.custom-checkbox
+{
+  padding: 0;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background-color 0.1s, box-shadow 0.1s;
+  text-decoration: none;
+  box-sizing: border-box;
+  background-color: white;
+  border: 0;
+  border-spacing: 0;
+  display: inline-block;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.custom-checkbox [type="checkbox"]+label {
+  position: relative;
+  padding: 7px 13px 6px 29px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 14px;
+  display: table-cell;
+  color: #666666;
+  border: 1px solid #bbbbbb;
+  border-radius: 2px;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.custom-checkbox [type="checkbox"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.custom-checkbox [type="checkbox"]:checked+label {
+  color: white;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.custom-checkbox [type="checkbox"]+label:before {
+  content: '';
+  position: absolute;
+  left: 11px;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10%;
+  background: #fff;
+}
+
+.custom-checkbox [type="checkbox"]+label:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #005cbf;
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  border-radius: 10%;
+  -webkit-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+
+.custom-checkbox [type="checkbox"]:not(:checked)+label:after {
+  opacity: 0;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+}
+
+.custom-checkbox [type="checkbox"]:checked+label:after {
+  opacity: 1;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
 #dialog-1,
 #dialog-2,
 #dialog-3,

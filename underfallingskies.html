@@ -2,17 +2,22 @@
 <html>
 
 <head>
-  <title>Norfolk's Gaming Tools</title>
+  <title>Norfolk's Gaming Stuff</title>
   <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- TEMP: Commenting out menu until it's needed -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="js/menu.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/underfallingskies.js"></script>
   <style>
     .menu-index {
       color: rgb(255, 255, 255) !important;
@@ -28,13 +33,427 @@
     <div class="content">
       <div class="content-table flex-column">
         <div class="flex-item flex-column">
-            <h2 class="add-top-margin">Under Falling Skies Campaign Generator</h2>
-            <div class="control-group">
-                <button class="custom-button custom-button-primary" width=250px>Generate New Campaign</button>
-            </div> 
+          <h1 class="text-center add-top-margin">Under Falling Skies Tools</h1>
+          <h2 class="text-center">Game Randomiser</h2>
+          <div class="control-group">
+            <div class="custom-radio custom-radio-left custom-tooltip">
+              <span class="tooltiptext">Difficulty 0-1 &#9733;</span>
+              <input type="radio" name="difficulty" value="0" id="low">
+              <label for="low">Low</label>
+            </div>
+            <div class="custom-radio custom-radio-middle custom-tooltip">
+              <span class="tooltiptext">Difficulty 2-4 &#9733;</span>
+              <input type="radio" name="difficulty" value="1" id="medium" checked>
+              <label for="medium">Medium</label>
+            </div>
+            <div class="custom-radio custom-radio-right custom-tooltip">
+              <span class="tooltiptext">Difficulty 5-6 &#9733;</span>
+              <input type="radio" name="difficulty" value="2" id="high">
+              <label for="high">High</label>
+            </div>
+            <div class="custom-radio custom-radio-right custom-tooltip">
+              <span class="tooltiptext">Difficulty 7-8 &#9733;</span>
+              <input type="radio" name="difficulty" value="2" id="extreme">
+              <label for="extreme">Extreme</label>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play with randomised characters? Number of characters and upgrade status will depend on difficulty.</span>
+              <input type="checkbox" id="use-characters">
+              <label for="use-characters">Use Characters</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play with a randomised mission?</span>
+              <input type="checkbox" id="use-mission">
+              <label for="use-mission">Use Mission</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Allow destroyed city? Does not guarantee the city will be destroyed, this will depend on difficulty.</span>
+              <input type="checkbox" id="city-state">
+              <label for="city-state">Use Destroyed City</label>
+            </div>
+          </div>
+          <h2 class="text-center">Campaign Generator</h2>
+          <div class="center-align-content control-group">
+            <button class="custom-button custom-button-primary" width=250px onclick="generateCampaign()">Generate New Campaign</button>
+          </div>
+          <div class="control-group">
+            <div class="custom-radio custom-radio-left">
+              <input type="radio" name="threat-level" value="0" id="threat-0">
+              <label for="threat-0">Threat 0</label>
+            </div>
+            <div class="custom-radio custom-radio-middle">
+              <input type="radio" name="threat-level" value="1" id="threat-1" checked>
+              <label for="threat-1">Threat 1</label>
+            </div>
+            <div class="custom-radio custom-radio-right">
+              <input type="radio" name="threat-level" value="2" id="threat-2">
+              <label for="threat-2">Threat 2</label>
+            </div>
+            <div class="custom-radio custom-radio-middle">
+              <input type="radio" name="threat-level" value="3" id="threat-3">
+              <label for="threat-3">Threat 3</label>
+            </div>
+            <div class="custom-radio custom-radio-right">
+              <input type="radio" name="threat-level" value="4" id="threat-4">
+              <label for="threat-4">Threat 4</label>
+            </div>
+          </div>
+      </div>
+      <div class="flex-row">
+        <div class="flex-item flex-column full-width">
+          <div class="custom-tab" id="custom-tab">
+            <div class="custom-tab-menu center">
+              <a class="custom-tab-menu-item" data-content="parti">Part I</a>
+              <a class="custom-tab-menu-item" data-content="partii">Part II</a>
+              <a class="custom-tab-menu-item" data-content="partiii">Part III</a>
+              <a class="custom-tab-menu-item" data-content="partiv">Part IV</a>
+            </div>
+            <div class="custom-tab-content" data-content="parti">
+              <h3 class="text-center">Battle #1</h3>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <tbody>
+                    <tr>
+                      <td class="text-large">City</td>
+                      <td class="text-center" id="city1-1">---</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td class="text-large">Mission</td>
+                      <td class="text-center" id="miss1-1">---</td>
+                    </tr>
+                    <tr>
+                      <td class="text-large">Character</td>
+                      <td class="text-center" id="char1-1">---</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p>Tile set-up goes here</p>
+              <h3 class="text-center">Battle #2</h3>
+              <table class="custom-table">
+                <tbody>
+                  <tr>
+                    <td class="text-large">City</td>
+                    <td class="text-center" id="city1-2">---</td>
+                  </tr>
+                  <tr class="bg-color-light-gray">
+                    <td class="text-large">Mission</td>
+                    <td class="text-center" id="miss1-2">---</td>
+                  </tr>
+                  <tr>
+                    <td class="text-large">Character</td>
+                    <td class="text-center" id="char1-2">---</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="custom-tab-content" data-content="partii">
+              <p class="text text-center graph-title">
+                Title for the bottom table
+              </p>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <thead>
+                    <tr class="bg-color-gray">
+                      <th>Number of</th>
+                      <th class="text-center">Unique Users</th>
+                      <th class="text-center">Smell Reports</th>
+                      <th class="text-center">Interaction Events</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Enthusiasts</td>
+                      <td class="text-center">9.4%</td>
+                      <td class="text-center">50.6%</td>
+                      <td class="text-center">44.8%</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Explorers</td>
+                      <td class="text-center">36.1%</td>
+                      <td class="text-center">37.3%</td>
+                      <td class="text-center">27.3%</td>
+                    </tr>
+                    <tr>
+                      <td>Contributors</td>
+                      <td class="text-center">13.0%</td>
+                      <td class="text-center">12.1%</td>
+                      <td class="text-center">n/a</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Observers</td>
+                      <td class="text-center">41.6%</td>
+                      <td class="text-center">n/a</td>
+                      <td class="text-center">27.9%</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Size (N)</td>
+                      <td class="text-center">2,237</td>
+                      <td class="text-center">8,112</td>
+                      <td class="text-center">79,447</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <p class="text text-center graph-title">
+                Title for the bottom table
+              </p>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <thead>
+                    <tr class="bg-color-gray">
+                      <th>Number of</th>
+                      <th class="text-center">Unique Users</th>
+                      <th class="text-center">Smell Reports</th>
+                      <th class="text-center">Interaction Events</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Enthusiasts</td>
+                      <td class="text-center">9.4%</td>
+                      <td class="text-center">50.6%</td>
+                      <td class="text-center">44.8%</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Explorers</td>
+                      <td class="text-center">36.1%</td>
+                      <td class="text-center">37.3%</td>
+                      <td class="text-center">27.3%</td>
+                    </tr>
+                    <tr>
+                      <td>Contributors</td>
+                      <td class="text-center">13.0%</td>
+                      <td class="text-center">12.1%</td>
+                      <td class="text-center">n/a</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Observers</td>
+                      <td class="text-center">41.6%</td>
+                      <td class="text-center">n/a</td>
+                      <td class="text-center">27.9%</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Size (N)</td>
+                      <td class="text-center">2,237</td>
+                      <td class="text-center">8,112</td>
+                      <td class="text-center">79,447</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="custom-tab-content" data-content="partiii">
+              <p class="text text-center graph-title">
+                Title for the bottom table
+              </p>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <thead>
+                    <tr class="bg-color-gray">
+                      <th>Number of</th>
+                      <th class="text-center">Unique Users</th>
+                      <th class="text-center">Smell Reports</th>
+                      <th class="text-center">Interaction Events</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Enthusiasts</td>
+                      <td class="text-center">9.4%</td>
+                      <td class="text-center">50.6%</td>
+                      <td class="text-center">44.8%</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Explorers</td>
+                      <td class="text-center">36.1%</td>
+                      <td class="text-center">37.3%</td>
+                      <td class="text-center">27.3%</td>
+                    </tr>
+                    <tr>
+                      <td>Contributors</td>
+                      <td class="text-center">13.0%</td>
+                      <td class="text-center">12.1%</td>
+                      <td class="text-center">n/a</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Observers</td>
+                      <td class="text-center">41.6%</td>
+                      <td class="text-center">n/a</td>
+                      <td class="text-center">27.9%</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Size (N)</td>
+                      <td class="text-center">2,237</td>
+                      <td class="text-center">8,112</td>
+                      <td class="text-center">79,447</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <p class="text text-center graph-title">
+                Title for the bottom table
+              </p>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <thead>
+                    <tr class="bg-color-gray">
+                      <th>Number of</th>
+                      <th class="text-center">Unique Users</th>
+                      <th class="text-center">Smell Reports</th>
+                      <th class="text-center">Interaction Events</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Enthusiasts</td>
+                      <td class="text-center">9.4%</td>
+                      <td class="text-center">50.6%</td>
+                      <td class="text-center">44.8%</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Explorers</td>
+                      <td class="text-center">36.1%</td>
+                      <td class="text-center">37.3%</td>
+                      <td class="text-center">27.3%</td>
+                    </tr>
+                    <tr>
+                      <td>Contributors</td>
+                      <td class="text-center">13.0%</td>
+                      <td class="text-center">12.1%</td>
+                      <td class="text-center">n/a</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Observers</td>
+                      <td class="text-center">41.6%</td>
+                      <td class="text-center">n/a</td>
+                      <td class="text-center">27.9%</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Size (N)</td>
+                      <td class="text-center">2,237</td>
+                      <td class="text-center">8,112</td>
+                      <td class="text-center">79,447</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div class="custom-tab-content" data-content="partiv">
+              <p class="text text-center graph-title">
+                Title for the bottom table
+              </p>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <thead>
+                    <tr class="bg-color-gray">
+                      <th>Number of</th>
+                      <th class="text-center">Unique Users</th>
+                      <th class="text-center">Smell Reports</th>
+                      <th class="text-center">Interaction Events</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Enthusiasts</td>
+                      <td class="text-center">9.4%</td>
+                      <td class="text-center">50.6%</td>
+                      <td class="text-center">44.8%</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Explorers</td>
+                      <td class="text-center">36.1%</td>
+                      <td class="text-center">37.3%</td>
+                      <td class="text-center">27.3%</td>
+                    </tr>
+                    <tr>
+                      <td>Contributors</td>
+                      <td class="text-center">13.0%</td>
+                      <td class="text-center">12.1%</td>
+                      <td class="text-center">n/a</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Observers</td>
+                      <td class="text-center">41.6%</td>
+                      <td class="text-center">n/a</td>
+                      <td class="text-center">27.9%</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Size (N)</td>
+                      <td class="text-center">2,237</td>
+                      <td class="text-center">8,112</td>
+                      <td class="text-center">79,447</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <p class="text text-center graph-title">
+                Title for the bottom table
+              </p>
+              <div class="custom-table-container center add-top-margin-small">
+                <table class="custom-table">
+                  <thead>
+                    <tr class="bg-color-gray">
+                      <th>Number of</th>
+                      <th class="text-center">Unique Users</th>
+                      <th class="text-center">Smell Reports</th>
+                      <th class="text-center">Interaction Events</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Enthusiasts</td>
+                      <td class="text-center">9.4%</td>
+                      <td class="text-center">50.6%</td>
+                      <td class="text-center">44.8%</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Explorers</td>
+                      <td class="text-center">36.1%</td>
+                      <td class="text-center">37.3%</td>
+                      <td class="text-center">27.3%</td>
+                    </tr>
+                    <tr>
+                      <td>Contributors</td>
+                      <td class="text-center">13.0%</td>
+                      <td class="text-center">12.1%</td>
+                      <td class="text-center">n/a</td>
+                    </tr>
+                    <tr class="bg-color-light-gray">
+                      <td>Observers</td>
+                      <td class="text-center">41.6%</td>
+                      <td class="text-center">n/a</td>
+                      <td class="text-center">27.9%</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Size (N)</td>
+                      <td class="text-center">2,237</td>
+                      <td class="text-center">8,112</td>
+                      <td class="text-center">79,447</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
 </body>
 
 </html>

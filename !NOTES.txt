@@ -37,3 +37,7 @@ TODO
 - Turn off privacy_file_unique_origin in about:config after done
 - Add credits for game design & ownership
 - Match checkbox style to radio style in widgets.css
+
+- Freshwater Fly:
+    - Replace shitty hit/miss text with fun animations
+    - Replace Draw button with clicking on animation area

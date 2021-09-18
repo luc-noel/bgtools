@@ -67,9 +67,22 @@ var data = {
 
 /* Generate a single Under Falling Skies game */
 /* Randomises city, mission, tiles, and characters based on desired difficulty */
-function generateRandomDifficulty(difficulty)
+function generateRandomDifficulty()
 {
+    getGameSettings();
+}
 
+// Variables for game generation settings
+var difficultyValue, useCharacters, useMission, destroyCity;
+
+// Retrieve the game generation settings
+// Activate in button onclick
+function getGameSettings()
+{
+    difficultyValue= $('input[name="difficulty"]:checked').val();
+    useCharacters = $('#use-characters').prop('checked');
+    useMission = $('#use-mission').prop('checked');
+    destroyCity = $('#city-state').prop('checked');
 }
 
 /* Generate Under Falling Skies campaign */

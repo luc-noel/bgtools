@@ -53,7 +53,7 @@
             </div>
             <div class="custom-radio custom-radio-right custom-tooltip">
               <span class="tooltiptext">Difficulty 7-8 &#9733;</span>
-              <input type="radio" name="difficulty" value="2" id="extreme">
+              <input type="radio" name="difficulty" value="3" id="extreme">
               <label for="extreme">Extreme</label>
             </div>
           </div>
@@ -74,10 +74,10 @@
               <label for="city-state">Use Destroyed City</label>
             </div>
           </div>
-          <h2 class="text-center">Campaign Generator</h2>
           <div class="center-align-content control-group">
-            <button class="custom-button custom-button-primary" width=250px onclick="generateCampaign()">Generate New Campaign</button>
+            <button class="custom-button custom-button-primary" width=250px onclick="generateRandomDifficulty()">Generate Game</button>
           </div>
+          <h2 class="text-center">Campaign Generator</h2>
           <div class="control-group">
             <div class="custom-radio custom-radio-left">
               <input type="radio" name="threat-level" value="0" id="threat-0">
@@ -99,6 +99,9 @@
               <input type="radio" name="threat-level" value="4" id="threat-4">
               <label for="threat-4">Threat 4</label>
             </div>
+          </div>
+          <div class="center-align-content control-group">
+            <button class="custom-button custom-button-primary" width=250px onclick="generateCampaign()">Generate Campaign</button>
           </div>
       </div>
       <div class="flex-row">

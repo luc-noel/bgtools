@@ -39,5 +39,6 @@ TODO
 - Match checkbox style to radio style in widgets.css
 
 - Freshwater Fly:
+    - Visualise past drawn cards
     - Replace shitty hit/miss text with fun animations
     - Replace Draw button with clicking on animation area

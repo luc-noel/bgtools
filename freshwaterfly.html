@@ -31,15 +31,33 @@
   <div class="menu-container"></div>
   <div class="content-container">
     <div class="content">
-      <div class="content-table flex-column">
-        <div class="flex-item flex-column">
+      <div class="content-table flex-column center">
+        <div class="flex-item flex-column center-align-content">
           <h1 class="text-center add-top-margin">Freshwater Fly Strike Deck</h1>
-          <div class="center-align-content control-group">
+          <div class="control-group">
             <button class="custom-button custom-button-primary" width=250px onclick="rollStrikeDeck()">Draw Card</button>
             <button class="custom-button custom-button-primary" width=250px onclick="resetStrikeDeck()">Reshuffle</button>
           </div>
-          <p class="text text-large" id="strike-result">...</p>
-          <p class="text">Note: Cards are automatically reshuffled when the deck is used up.</p>
+          <div class="flex-item flex-column">
+            <p class="text text-large" id="strike-result">...</p>
+            <p class="text text-small" id="strike-record"></p>
+          </div>
+          <div class="flex-item flex-column">
+            <div class="flex-row">
+              <div class="flex-item flex-column">
+                <p class="text text-large" id="strike-1">--</p>
+              </div>
+              <div class="flex-item flex-column">
+                <p class="text text-large" id="strike-2">--</p>
+              </div>
+              <div class="flex-item flex-column">
+                <p class="text text-large" id="strike-3">--</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex-item flex-column">
+            <p class="text">Note: Cards are automatically reshuffled when the deck is used up.</p>
+          </div>
         </div>
       </div>
     </div>

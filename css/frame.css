@@ -643,6 +643,7 @@ ol.nested>li:before {
 .custom-table {
   display: block;
   overflow-x: auto;
+  background-color: white;
   border: 1px solid #666666;
   border-collapse: collapse;
   border-spacing: 0;

@@ -1,23 +1,23 @@
 var data = {
     "cities":
     [
-        {"name":"New York", "destroyed":false, "unlock":0},
-        {"name":"Roswell", "destroyed":false, "unlock":0},
-        {"name":"Washington, D.C.", "destroyed":false, "unlock":0},
-        {"name":"Havana", "destroyed":false, "unlock":1},
-        {"name":"Mexico City", "destroyed":false, "unlock":1},
-        {"name":"Montreal", "destroyed":false, "unlock":1},
-        {"name":"Rio de Janeiro", "destroyed":false, "unlock":1},
-        {"name":"Beijing", "destroyed":false, "unlock":2},
-        {"name":"Cairo", "destroyed":false, "unlock":2},
-        {"name":"Johannesburg", "destroyed":false, "unlock":2},
-        {"name":"London", "destroyed":false, "unlock":2},
-        {"name":"Moscow", "destroyed":false, "unlock":2},
-        {"name":"Paris", "destroyed":false, "unlock":2},
-        {"name":"Seoul", "destroyed":false, "unlock":3},
-        {"name":"Singapore", "destroyed":false, "unlock":3},
-        {"name":"Sydney", "destroyed":false, "unlock":3},
-        {"name":"Tokyo", "destroyed":false, "unlock":3}
+        {"name":"New York", "damaged":false, "unlock":0},
+        {"name":"Roswell", "damaged":false, "unlock":0},
+        {"name":"Washington, D.C.", "damaged":false, "unlock":0},
+        {"name":"Havana", "damaged":false, "unlock":1},
+        {"name":"Mexico City", "damaged":false, "unlock":1},
+        {"name":"Montreal", "damaged":false, "unlock":1},
+        {"name":"Rio de Janeiro", "damaged":false, "unlock":1},
+        {"name":"Beijing", "damaged":false, "unlock":2},
+        {"name":"Cairo", "damaged":false, "unlock":2},
+        {"name":"Johannesburg", "damaged":false, "unlock":2},
+        {"name":"London", "damaged":false, "unlock":2},
+        {"name":"Moscow", "damaged":false, "unlock":2},
+        {"name":"Paris", "damaged":false, "unlock":2},
+        {"name":"Seoul", "damaged":false, "unlock":3},
+        {"name":"Singapore", "damaged":false, "unlock":3},
+        {"name":"Sydney", "damaged":false, "unlock":3},
+        {"name":"Tokyo", "damaged":false, "unlock":3}
 
     ],
     "characters":
@@ -65,34 +65,128 @@ var data = {
     ]
 }
 
-/* Generate a single Under Falling Skies game */
-/* Randomises city, mission, tiles, and characters based on desired difficulty */
-function generateRandomDifficulty()
-{
-    getGameSettings();
-}
-
 // Variables for game generation settings
-var difficultyValue, useCharacters, useMission, destroyCity;
+var difficultyValue, useCharacters, useMission, damageCity;
 
-// Retrieve the game generation settings
-// Activate in button onclick
+/* Retrieve the game generation settings */
+/* Activate in button onclick */
 function getGameSettings()
 {
     difficultyValue= $('input[name="difficulty"]:checked').val();
     useCharacters = $('#use-characters').prop('checked');
     useMission = $('#use-mission').prop('checked');
-    destroyCity = $('#city-state').prop('checked');
+    damageCity = $('#city-state').prop('checked');
+}
+
+/* Generate a single Under Falling Skies game */
+/* Randomises city, mission, tiles, and characters based on desired difficulty */
+function generateByDifficulty()
+{
+    document.getElementById("city").innerHTML = "---";
+    document.getElementById("miss").innerHTML = "---";
+    document.getElementById("char").innerHTML = "---";
+
+    getGameSettings();
+
+    var difficultyCount = 0.0;
+    var targetDifficulty = 0.0;
+    var damagedText = "";
+    var charText = "---";
+
+    var randCity = Math.floor(Math.random() * data["cities"].length);
+    // Undamaged Cities reduce difficulty by 0.5
+    difficultyCount -= 0.5;
+
+    switch (difficultyValue)
+    {
+        // Low difficulty
+        case 0:
+            targetDifficulty = getRandomIntInclusive(0, 1);
+            break;
+        // Medium difficulty
+        case 1:
+            targetDifficulty = getRandomIntInclusive(2, 3);
+            break;
+        // High difficulty
+        case 2:
+            targetDifficulty = getRandomIntInclusive(4, 5);
+            break;
+        // Extreme difficulty
+        case 0:
+            targetDifficulty = getRandomIntInclusive(5, 8);
+            break;
+    }
+
+    // TODO: YOU WERE WORKING ON THIS BIT
+    randomiseSkyTiles(targetDifficulty);
+
+    if (useMission)
+    {
+        var randMission = Math.floor(Math.random() * data["missions"].length);
+        document.getElementById("miss").innerHTML = data["missions"][randMission]["name"];
+        // Missions increase difficulty by 1
+        difficultyCount += 1.0;
+    }
+
+    // Array to pick characters
+    // When a character has already been picked remove their index from this array
+    var charIndexArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    // Continue adding characters and/or randomise damaged city until desired difficulty is met
+    while (difficultyCount > targetDifficulty)
+    {
+        if (useCharacters)
+        {
+            charText = "";
+
+            // When adding an second or third character add a new line
+            if (charText.length > 0)
+            {
+                charText += "<br>";
+            }
+
+            var randCharacter = Math.floor(Math.random() * charIndexArray.length);
+            charText += data["characters"][charIndexArray[randCharacter]]["name"];
+            charIndexArray.splice(randCharacter, 1);
+
+            // Non-upgraded characters reduce difficulty by 0.5
+            difficultyCount -= 0.5;
+
+            // Randomise if character is upgraded
+            if (difficultyCount > targetDifficulty & Math.random() > 0.5)
+            {
+                // Upgraded characters reduce difficulty by an additional 0.5
+                difficultyCount -= 0.5;
+                charText += " (Upgraded)";
+            }
+        }
+
+        if (difficultyCount > targetDifficulty & damageCity)
+        {
+            // Randomise if city is damaged
+            if (Math.random() > 0.5)
+            {
+                // Damaged Cities reduce difficulty by an additional 0.5
+                difficultyCount -= 0.5;                
+                damagedText = " (Damaged)";
+            }
+        }
+    }
+
+    document.getElementById("city").innerHTML = data["cities"][randCity]["name"] + damagedText;
+    document.getElementById("char").innerHTML = charText;
+}
+
+function randomiseSkyTiles(targetDifficulty)
+{
+    var difficultyCount = 0;
+
+    const randTile0 = data["tiles"]
 }
 
 /* Generate Under Falling Skies campaign */
 function generateCampaign()
 {
-    // Generate random indexes based on number of keys
-    const randCity = Math.floor(Math.random() * cities1.length);
-    const randCharacter = Math.floor(Math.random() * characters.length);
-    const rancMission = Math.floor(Math.random() * obj.length);
-
     // Character team array
     var team = [];
 

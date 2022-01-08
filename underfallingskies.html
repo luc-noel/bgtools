@@ -12,7 +12,6 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/widgets.js"></script>
@@ -35,6 +34,7 @@
         <div class="flex-item flex-column">
           <h1 class="text-center add-top-margin">Under Falling Skies Tools</h1>
           <h2 class="text-center">Game Randomiser</h2>
+          <p class="text-center">The Game Randomiser presumes you've unlocked all campaign contents.</p>
           <div class="control-group">
             <div class="custom-radio custom-radio-left custom-tooltip">
               <span class="tooltiptext">Difficulty 0-1 &#9733;</span>
@@ -42,17 +42,17 @@
               <label for="low">Low</label>
             </div>
             <div class="custom-radio custom-radio-middle custom-tooltip">
-              <span class="tooltiptext">Difficulty 2-4 &#9733;</span>
+              <span class="tooltiptext">Difficulty 2-3 &#9733;</span>
               <input type="radio" name="difficulty" value="1" id="medium" checked>
               <label for="medium">Medium</label>
             </div>
             <div class="custom-radio custom-radio-right custom-tooltip">
-              <span class="tooltiptext">Difficulty 5-6 &#9733;</span>
+              <span class="tooltiptext">Difficulty 4-5 &#9733;</span>
               <input type="radio" name="difficulty" value="2" id="high">
               <label for="high">High</label>
             </div>
             <div class="custom-radio custom-radio-right custom-tooltip">
-              <span class="tooltiptext">Difficulty 7-8 &#9733;</span>
+              <span class="tooltiptext">Difficulty 5+ &#9733;</span>
               <input type="radio" name="difficulty" value="3" id="extreme">
               <label for="extreme">Extreme</label>
             </div>
@@ -69,13 +69,31 @@
               <label for="use-mission">Use Mission</label>
             </div>
             <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Allow destroyed city? Does not guarantee the city will be destroyed, this will depend on difficulty.</span>
+              <span class="tooltiptext">Allow damaged city? Does not guarantee the city will be damaged, this will depend on difficulty.</span>
               <input type="checkbox" id="city-state">
-              <label for="city-state">Use Destroyed City</label>
+              <label for="city-state">Use Damaged City</label>
             </div>
           </div>
           <div class="center-align-content control-group">
-            <button class="custom-button custom-button-primary" width=250px onclick="generateRandomDifficulty()">Generate Game</button>
+            <button class="custom-button custom-button-primary" width=250px onclick="generateByDifficulty()">Generate Game</button>
+          </div>
+          <div class="custom-table-container center add-top-margin-small">
+            <table class="custom-table">
+              <tbody>
+                <tr>
+                  <td class="text-large">City</td>
+                  <td class="text-center" id="city">---</td>
+                </tr>
+                <tr class="bg-color-light-gray">
+                  <td class="text-large">Mission</td>
+                  <td class="text-center" id="miss">---</td>
+                </tr>
+                <tr>
+                  <td class="text-large">Characters</td>
+                  <td class="text-center" id="char">---</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <h2 class="text-center">Campaign Generator</h2>
           <div class="control-group">

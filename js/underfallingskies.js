@@ -85,6 +85,8 @@ function generateByDifficulty()
     document.getElementById("city").innerHTML = "---";
     document.getElementById("miss").innerHTML = "---";
     document.getElementById("char").innerHTML = "---";
+    // Clear star ratings to fill them later
+    document.getElementById("star-difficulty").innerHTML = "";
 
     getGameSettings();
 
@@ -139,7 +141,7 @@ function generateByDifficulty()
         {
             charText = "";
 
-            // When adding an second or third character add a new line
+            // When adding a second or third character add a new line
             if (charText.length > 0)
             {
                 charText += "<br>";
@@ -173,6 +175,29 @@ function generateByDifficulty()
         }
     }
 
+    var starText = "";
+
+    // Reduce difficultyCount by 0.5 otherwise it gets rounded up to the next whole value
+    for (i = 0; i < difficultyCount - 0.5; i++)
+    {
+        starText += "&#9733;";
+    }
+
+    // Fill in missing stars with blanks until there are at least 5 stars
+    for (i = 0; i + difficultyCount < 5; i++)
+    {
+        starText += "&#9734;";
+    }
+
+    // Check if the difficulty count isn't a whole number
+    // If not then the difficulty is a value ending in 0.5
+    if (difficultyCount % 1 != 0)
+    {
+        starText += "½";
+    }
+
+    document.getElementById("star-difficulty").innerHTML = starText;
+
     document.getElementById("city").innerHTML = data["cities"][randCity]["name"] + damagedText;
     document.getElementById("char").innerHTML = charText;
 }
@@ -181,7 +206,7 @@ function randomiseSkyTiles(targetDifficulty)
 {
     var difficultyCount = 0;
 
-    const randTile0 = data["tiles"]
+    //const randTile0 = data["tiles"]
 }
 
 /* Generate Under Falling Skies campaign */

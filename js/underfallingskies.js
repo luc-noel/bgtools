@@ -53,15 +53,15 @@ var data = {
     ],
     "tiles":
     [
-        {"height":0, "stars":[0,1], "unlock":0},
-        {"height":1, "stars":[0,1], "unlock":0},
-        {"height":2, "stars":[0,1], "unlock":0},
-        {"height":3, "stars":[0,1], "unlock":0},
-        {"height":0, "stars":[1,2], "unlock":2},
-        {"height":2, "stars":[1,2], "unlock":3},
-        {"height":3, "stars":[1,2], "unlock":3},
-        {"height":1, "stars":[1,2], "unlock":4},
-        {"height":4, "stars":[0,0], "unlock":4}
+        {"height":0, "stars":[0,1], "flipped":false, "unlock":0},
+        {"height":1, "stars":[0,1], "flipped":false, "unlock":0},
+        {"height":2, "stars":[0,1], "flipped":false, "unlock":0},
+        {"height":3, "stars":[0,1], "flipped":false, "unlock":0},
+        {"height":0, "stars":[1,2], "flipped":false, "unlock":2},
+        {"height":2, "stars":[1,2], "flipped":false, "unlock":3},
+        {"height":3, "stars":[1,2], "flipped":false, "unlock":3},
+        {"height":1, "stars":[1,2], "flipped":false, "unlock":4},
+        {"height":4, "stars":[0,0], "flipped":false, "unlock":4}
     ]
 }
 
@@ -91,36 +91,42 @@ function generateByDifficulty()
     getGameSettings();
 
     var difficultyCount = 0.0;
-    var targetDifficulty = 0.0;
+    var maxDifficulty = 0.0;
     var damagedText = "";
     var charText = "---";
-
-    var randCity = Math.floor(Math.random() * data["cities"].length);
-    // Undamaged Cities reduce difficulty by 0.5
-    difficultyCount -= 0.5;
 
     switch (difficultyValue)
     {
         // Low difficulty
-        case 0:
-            targetDifficulty = getRandomIntInclusive(0, 1);
+        case "0":
+            maxDifficulty = getRandomIntInclusive(0,1);
             break;
         // Medium difficulty
-        case 1:
-            targetDifficulty = getRandomIntInclusive(2, 3);
+        case "1":
+            maxDifficulty = getRandomIntInclusive(2,3);
             break;
         // High difficulty
-        case 2:
-            targetDifficulty = getRandomIntInclusive(4, 5);
+        case "2":
+            maxDifficulty = getRandomIntInclusive(4,5);
             break;
         // Extreme difficulty
-        case 0:
-            targetDifficulty = getRandomIntInclusive(5, 8);
+        case "3":
+            maxDifficulty = getRandomIntInclusive(6,7);
             break;
     }
 
-    // TODO: YOU WERE WORKING ON THIS BIT
-    randomiseSkyTiles(targetDifficulty);
+    // Artificially randomise sky tiles to a higher value, offset by 0-2
+    // This will allow for more variety of character counts and city status
+    var offset = Math.floor((Math.random() + 0.5) * 4) / 2;
+
+    while (difficultyCount < maxDifficulty + offset)
+    {
+        difficultyCount = randomiseSkyTiles(maxDifficulty + offset);
+    }
+   
+    var randCity = Math.floor(Math.random() * data["cities"].length);
+    // Undamaged Cities reduce difficulty by 0.5
+    difficultyCount -= 0.5;
 
     if (useMission)
     {
@@ -135,7 +141,7 @@ function generateByDifficulty()
     var charIndexArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     // Continue adding characters and/or randomise damaged city until desired difficulty is met
-    while (difficultyCount > targetDifficulty)
+    while (difficultyCount > maxDifficulty)
     {
         if (useCharacters)
         {
@@ -155,7 +161,7 @@ function generateByDifficulty()
             difficultyCount -= 0.5;
 
             // Randomise if character is upgraded
-            if (difficultyCount > targetDifficulty & Math.random() > 0.5)
+            if (difficultyCount > maxDifficulty & Math.random() > 0.5)
             {
                 // Upgraded characters reduce difficulty by an additional 0.5
                 difficultyCount -= 0.5;
@@ -163,7 +169,7 @@ function generateByDifficulty()
             }
         }
 
-        if (difficultyCount > targetDifficulty & damageCity)
+        if (difficultyCount > maxDifficulty & damageCity)
         {
             // Randomise if city is damaged
             if (Math.random() > 0.5)
@@ -175,6 +181,7 @@ function generateByDifficulty()
         }
     }
 
+    // Visualise difficulty with stars
     var starText = "";
 
     // Reduce difficultyCount by 0.5 otherwise it gets rounded up to the next whole value
@@ -197,16 +204,68 @@ function generateByDifficulty()
     }
 
     document.getElementById("star-difficulty").innerHTML = starText;
-
     document.getElementById("city").innerHTML = data["cities"][randCity]["name"] + damagedText;
     document.getElementById("char").innerHTML = charText;
 }
+
+// One array item per height level of tiles
+var randomTiles = [{}, {}, {}, {}];
 
 function randomiseSkyTiles(targetDifficulty)
 {
     var difficultyCount = 0;
 
-    //const randTile0 = data["tiles"]
+    // Pick a tile for each height from the options in data
+    for (var height = 0; height < 4; height++)
+    {
+        // Get the tiles from the data that match the randomised height
+        var tiles = [];
+
+        for (var i = 0; i < data["tiles"].length; i++)
+        {
+            if (data["tiles"][i]["height"] == height)
+            {
+                tiles.push(data["tiles"][i]);
+            }
+        }
+
+        // Choose a single tile for the height
+        var tile = tiles[Math.floor(Math.random() + 0.5)];
+        difficultyCount += tile["stars"][0];
+
+        // Send all the tile info to randomTiles for passing to the HTML page later
+        // Deletes the previous tile at that height if there was one
+        randomTiles.splice(height, 1, tile);
+    }
+
+    // Which tile heights have yet to be randomised
+    // Randomising the order the tiles are flipped in avoids patterns of the lower/higher floors being more likely to be flipped
+    var tileLevels = [0, 1, 2, 3];
+
+    // Flip tiles to add to difficulty
+    while (difficultyCount < targetDifficulty)
+    {
+        // If we got here randomised tiles weren't high enough value
+        // Punt us out of here and let the other generator retry
+        if (tileLevels.length == 0)
+        {
+            break;
+        }
+
+        var height = Math.floor(Math.random() * tileLevels.length);
+        var tile = randomTiles[tileLevels[height]];
+
+        // Randomise which side of the tile to use, where 0 = unflipped side, 1 = flipped side
+        tile["flipped"] = true;
+
+        // Add the difference between the previously applied difficulty and the flipped difficulty
+        difficultyCount += tile["stars"][1] - tile["stars"][0];
+       
+        tileLevels.splice(height, 1); // Remove height option from being randomised again
+        randomTiles.splice(tileLevels[height], 1, tile); // Update the tile with the flipped value
+    }
+
+    return difficultyCount;
 }
 
 /* Generate Under Falling Skies campaign */
@@ -223,3 +282,10 @@ function generateCampaign()
     document.getElementById("char1-2").innerHTML = "";
     document.getElementById("miss1-2").innerHTML = "";
 }
+
+function getRandomIntInclusive(min, max)
+{
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
+} 

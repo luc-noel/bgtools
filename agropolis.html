@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Agropolis Score Formatter - Norfolk's Gaming Stuff</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/xopolis.js"></script>
+  <script>
+    window.onload = function()
+    {
+      setGoalDropdowns(agropolis);
+      getGameSettings();
+    }
+  </script>
+  <style>
+    .menu-index {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <div class="content">
+      <div class="content-table flex-column">
+        <div class="flex-item flex-column">
+          <img class="image center max-width-400" src="img/trek12-logo.png">
+          <h2 class="text-center">Score Formatter</h2>
+          <p class="text-center no-top-margin">Formats scoring conditions for commenting in BGG play logging.</p>
+          <div class="content-container center-align-content">
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Add Feed Fees into the scoring? This will affect the target score.</span>
+              <input type="checkbox" id="feed-fees">
+              <label for="feed-fees">Use Feed Fees</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 id="score" class="text-center">--/--</h3>
+      <div class="flex-row-center">
+        <div class="control-group">
+          <select id="goals-1" onchange="updateTargetScore(agropolis)"></select>
+          <input id="goal-1-score" class="custom-textbox stretch-on-mobile" type="text" placeholder="Input Score">
+        </div>
+        <div class="control-group">
+          <select id="goals-2" onchange="updateTargetScore(agropolis)"></select>
+          <input id="goal-2-score" class="custom-textbox stretch-on-mobile" type="text" placeholder="Input Score">
+        </div>
+        <div class="control-group">
+          <select id="goals-3" onchange="updateTargetScore(agropolis)"></select>
+          <input id="goal-3-score" class="custom-textbox stretch-on-mobile" type="text" placeholder="Input Score">
+        </div>
+      </div>
+      <div class="flex-row-center">
+        <div class="control-group">
+          <input class="custom-textbox stretch-on-mobile" type="text" placeholder="Orchards Score">
+          <input class="custom-textbox stretch-on-mobile" type="text" placeholder="Fields Score">
+          <input class="custom-textbox stretch-on-mobile" type="text" placeholder="Livestock Score">
+          <input class="custom-textbox stretch-on-mobile" type="text" placeholder="Vineyards Score">
+        </div>
+      </div>
+      <div class="flex-row-center">
+        <div class="control-group">        
+          <input class="custom-textbox stretch-on-mobile" type="text" placeholder="Roads Score">
+        </div>
+      </div>
+      <div class="content-container center-align-content add-top-margin">
+        <button class="custom-button custom-button-primary" width=250px onclick="copyToClipboard()">Copy to Clipboard</button>
+      </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

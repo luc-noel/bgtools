@@ -68,3 +68,43 @@ var sprawlopolisConstruction =
     {name:"Bulldozed", score:0},
     {name:"Business is Closed", score:0},
 ]
+
+var goals = [];
+var useFeedFees = false;
+
+function getGameSettings()
+{
+    useFeedFees = $('#feed-fees').prop('checked');
+    goals.push(document.getElementById("goals-1").value);
+    goals.push(document.getElementById("goals-2").value);
+    goals.push(document.getElementById("goals-3").value);
+    console.log(goals);
+}
+
+var score, targetScore;
+
+function updateTargetScore(data)
+{
+    targetScore = 0;
+
+    for (var i = 0; i < goals.length; i++)
+    {
+        targetScore += data[goals[i]].score;
+    }
+    
+    document.getElementById("score").innerHTML = score + "/" + targetScore;
+}
+
+function setGoalDropdowns(data)
+{
+    var items = [];
+
+    for (var i = 0; i < data.length; i++)
+    {
+        items += '<option value="' + i + '">' + data[i].name + '</option>';
+    }
+
+    document.getElementById("goals-1").innerHTML = items;
+    document.getElementById("goals-2").innerHTML = items;
+    document.getElementById("goals-3").innerHTML = items;
+}

@@ -237,6 +237,23 @@
   cursor: pointer;
 }
 
+.custom-dropmenu {
+  padding: 5px 31px 5px 10px;
+  outline: none;
+  border-radius: 0px;
+  box-shadow: none;
+  transition: background-color 0.1s, box-shadow 0.1s, border 0.1s;
+  text-decoration: none;
+  display: block;
+  box-sizing: border-box;
+  color: black;
+  height: 37px;
+  border: 1px solid #7d7d7d;
+  background-color: white;
+  width: 100%;
+  cursor: pointer;
+}
+
 .custom-dropdown.large>a {
   height: 37px;
   padding: 5px 31px 5px 10px;
@@ -246,6 +263,16 @@
   text-align: left;
   font-size: 14px !important;
   line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.custom-dropmenu {
+  text-align: left;
+  font-size: 16px !important;
+  line-height: 25px;
   white-space: nowrap;
   overflow: hidden;
   display: block;

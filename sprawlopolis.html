@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Sprawlopolis Score Formatter - Norfolk's Gaming Stuff</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/xopolis.js"></script>
+  <script>
+    window.onload = function ()
+    {
+      setMode("sprawlopolis");
+      setGoalDropdowns(sprawlopolis);
+      getGameSettings();
+      updateScores(sprawlopolis);
+    }
+  </script>
+  <style>
+    .menu-index {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <div class="content">
+      <div class="content-table flex-column">
+        <div class="flex-item flex-column">
+          <div class="content-container center-align-content">
+            <a href="combopolis.html"><img class="image max-width-140" style="padding-right: 10px;"
+                src="img/combopolis-logo.png"></a>
+            <img class="image max-width-400" src="img/sprawlopolis-logo.png">
+            <a href="agropolis.html"><img class="image max-width-140" style="padding-left: 10px;"
+                src="img/agropolis-logo.png"></a>
+          </div>
+          <h2 class="text-center">Score Formatter</h2>
+          <p class="text-center no-top-margin">Formats scoring conditions to add as a comment in BGG play logs.</p>
+          <p class="text-center no-top-margin">Hover over the "Copy to Clipboard" button for a preview of the formatted
+            comment.</p>
+          <div class="flex-row-center">
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play with the Beaches expansion?</span>
+              <input type="checkbox" id="use-beaches" onchange="updateScores(sprawlopolis)">
+              <label for="use-beaches">Use Beaches</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play with the Construction Zones expansion?</span>
+              <input type="checkbox" id="use-zone" onchange="updateScores(sprawlopolis)">
+              <label for="use-zone">Use Construction Zones</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play with the Points of Interest expansion?</span>
+              <input type="checkbox" id="use-exp1" onchange="updateScores(sprawlopolis)">
+              <label for="use-exp1">Use Points of Interest</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play with the Wrecktar expansion?</span>
+              <input type="checkbox" id="use-exp2" onchange="updateScores(sprawlopolis)">
+              <label for="use-exp2">Use Wrecktar</label>
+            </div>
+          </div>
+          <div class="flex-row-center">
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Format block scores into separate items? By default they are added together onto
+                a single Blocks line.</span>
+              <input type="checkbox" id="per-block" onchange="updateScores(sprawlopolis)">
+              <label for="per-block">Separate Blocks</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Format points using par scoring? The target score is subtracted from your
+                points, so that a score of 0 or higher means the goal scores have been met, while a negative score is a
+                loss.</span>
+              <input type="checkbox" id="use-par" onchange="updateScores(sprawlopolis)">
+              <label for="use-par">Use Par Scoring</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1 id="score" class="text-center no-top-margin no-bottom-margin">--/--</h1>
+      <div class="flex-row-center">
+        <div class="control-group">
+          <select id="goals-1" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(sprawlopolis)"></select>
+          <input id="goal-1-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+            placeholder="Score" autocomplete="off" onchange="updateScores(sprawlopolis)">
+        </div>
+        <div class="control-group">
+          <select id="goals-2" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(sprawlopolis)"></select>
+          <input id="goal-2-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+            placeholder="Score" autocomplete="off" onchange="updateScores(sprawlopolis)">
+        </div>
+        <div class="control-group">
+          <select id="goals-3" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(sprawlopolis)"></select>
+          <input id="goal-3-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+            placeholder="Score" autocomplete="off" onchange="updateScores(sprawlopolis)">
+        </div>
+      </div>
+      <div class="flex-row-center">
+        <div class="control-group">
+          <select id="beaches" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(sprawlopolis)"></select>
+          <input id="beaches-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+            placeholder="Score" autocomplete="off" onchange="updateScores(sprawlopolis)" readonly>
+        </div>
+        <div class="control-group">
+          <select id="zone" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(sprawlopolis)"></select>
+          <input id="zone-score" class="custom-textbox stretch-on-mobile" type="text" placeholder="Score"
+            autocomplete="off" onchange="updateScores(sprawlopolis)" readonly>
+        </div>
+      </div>
+      <div class="flex-row-center">
+        <div class="control-group">
+          <input class="custom-textbox stretch-on-mobile" id="blocks-1" type="text" placeholder="Commercial"
+            autocomplete="off" onchange="updateScores(sprawlopolis)">
+          <input class="custom-textbox stretch-on-mobile" id="blocks-2" type="text" placeholder="Parks"
+            autocomplete="off" onchange="updateScores(sprawlopolis)">
+          <input class="custom-textbox stretch-on-mobile" id="blocks-3" type="text" placeholder="Industrial"
+            autocomplete="off" onchange="updateScores(sprawlopolis)">
+          <input class="custom-textbox stretch-on-mobile" id="blocks-4" type="text" placeholder="Residential"
+            autocomplete="off" onchange="updateScores(sprawlopolis)">
+        </div>
+      </div>
+      <div class="flex-row-center">
+        <div class="control-group">
+          <input class="custom-textbox stretch-on-mobile" id="exp-1" type="text" placeholder="Points of Interest"
+            autocomplete="off" onchange="updateScores(sprawlopolis)" readonly>
+          <input class="custom-textbox stretch-on-mobile" id="exp-2" type="text" placeholder="Wrecktar"
+            autocomplete="off" onchange="updateScores(sprawlopolis)" readonly>
+          <input class="custom-textbox stretch-on-mobile" id="roads" type="text" placeholder="Roads" autocomplete="off"
+            onchange="updateScores(sprawlopolis)">
+        </div>
+      </div>
+      <div class="content-container center-align-content add-top-margin">
+        <div class="custom-tooltip">
+          <span class="tooltiptext" id="clipboard-preview">Clipboard Preview</span>
+          <button class="custom-button custom-button-primary" width=250px onclick="copyToClipboard()">Copy to
+            Clipboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

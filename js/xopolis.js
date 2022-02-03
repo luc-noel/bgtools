@@ -119,7 +119,7 @@ function getGameSettings()
     }
 
     // Agropolis specific settings
-    if (mode = "agropolis")
+    if (mode == "agropolis")
     {
         useFeedFees = $('#feed-fees').prop('checked');
     }
@@ -293,56 +293,6 @@ function setGoalDropdowns(data)
     }
 }
 
-/* Initialise the dropdowns, fills them from the necessary list*/
-function setCombopolisDropdowns()
-{
-    // Combine all Sprawlopolis and Agropolis items into one list
-    combopolis = combopolis.concat(sprawlopolis, agropolis);
-    console.log(combopolis);
-
-    var sprawloplisItems = [];
-    var agropolisItems = [];
-    var combopolisItems = [];
-
-    for (var i = 0; i < combopolis.length; i++)
-    {
-        // Combopolis goals are stored only in the first 6 index (0-5)
-        if (i < 6)
-        {
-            combopolisItems += '<option value="' + i + '">' + combopolis[i].name + '</option>';
-        }
-        // Sprawlopolis goals are stored in the next 18 indexes (6-23)
-        else if (i < 24)
-        {
-            sprawloplisItems += '<option value="' + i + '">' + combopolis[i].name + '</option>';
-        }
-        // The last 18 indexes are all Agropolis cards
-        else
-        {
-            agropolisItems += '<option value="' + i + '">' + combopolis[i].name + '</option>';
-        }
-    }
-
-    document.getElementById("goals-1").innerHTML = sprawloplisItems;
-    document.getElementById("goals-2").innerHTML = agropolisItems;
-    document.getElementById("goals-3").innerHTML = combopolisItems;
-
-    var beachItems = [];
-    var zoneItems = [];
-
-    for (var i = 0; i < sprawlopolisBeaches.length; i++)
-    {
-        beachItems += '<option value="' + i + '">' + sprawlopolisBeaches[i].name + '</option>';
-    }
-    for (var i = 0; i < sprawlopolisConstruction.length; i++)
-    {
-        zoneItems += '<option value="' + i + '">' + sprawlopolisConstruction[i].name + '</option>';
-    }
-
-    document.getElementById("beaches").innerHTML = beachItems;
-    document.getElementById("zone").innerHTML = zoneItems;
-}
-
 /* Formats the final text based on the inputs */
 function formatText(data)
 {
@@ -496,18 +446,28 @@ function tallyScore()
 /* For Combopolis, sorts out the 4 highest value blocks only */
 function sortHighestBlocks()
 {
-    var blocks = [document.getElementById('blocks-1'), document.getElementById('blocks-1a'),
-    document.getElementById('blocks-2'), document.getElementById('blocks-2a'),
-    document.getElementById('blocks-3'), document.getElementById('blocks-3a'),
-    document.getElementById('blocks-4'), document.getElementById('blocks-4a')];
+    var blocksS = [document.getElementById('blocks-1'), document.getElementById('blocks-2'),
+    document.getElementById('blocks-3'), document.getElementById('blocks-4')];
+
+    var blocksA = [document.getElementById('blocks-1a'), document.getElementById('blocks-2a'),
+    document.getElementById('blocks-3a'), document.getElementById('blocks-4a')];
 
     // Sort blocks highest to lowest
-    var sorted = blocks.sort(function (a, b)
+    var sortedS = blocksS.sort(function (a, b)
     {
-        return (b.value - a.value);
+        return (sanitiseNumbers(b.value) - sanitiseNumbers(a.value));
     });
 
-    return sorted.slice(0, 4);
+    sortedS = sortedS.slice(0, 2);
+
+    var sortedA = blocksA.sort(function (a, b)
+    {
+        return (sanitiseNumbers(b.value) - sanitiseNumbers(a.value));
+    });
+
+    sortedA = sortedA.slice(0, 2);
+
+    return sortedS.concat(sortedA);
 }
 
 /* Returns only the number values from an input or 0 if there's no input value */

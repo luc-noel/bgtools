@@ -301,11 +301,25 @@ function formatText(data)
     if (usePar)
     {
         // In par scoring the target score is already subtracted out during tallyScore()
-        text += score + "\n\n";
+        text += score;
+
+        if (useFeedFees)
+        {
+            text += "\nFeed Fees";
+        }
+
+        text += "\n\n";
     }
     else
     {
-        text += score + "/" + targetScore + "\n\n";
+        text += score + "/" + targetScore;
+
+        if (useFeedFees)
+        {
+            text += "\nFeed Fees";
+        }
+
+        text += "\n\n";
     }
     text += data[goals[0]].name + ": " + sanitiseNumbers(document.getElementById("goal-1-score").value) + "\n";
     text += data[goals[1]].name + ": " + sanitiseNumbers(document.getElementById("goal-2-score").value) + "\n";

@@ -76,6 +76,11 @@
           </div>
           <div class="flex-row-center">
             <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play using Hard mode rules? Only the largest block group will be scored.</span>
+              <input type="checkbox" id="use-hard" onchange="updateScores(sprawlopolis)">
+              <label for="use-hard">Hard Mode</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
               <span class="tooltiptext">Format block scores into separate items? By default they are added together onto
                 a single Blocks line.</span>
               <input type="checkbox" id="per-block" onchange="updateScores(sprawlopolis)">

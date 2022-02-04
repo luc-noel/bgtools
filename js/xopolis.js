@@ -81,6 +81,7 @@ var usePar, perBlock, useExp1, useExp2, useExp3, useExp4 = false;
 var useFeedFees = false;
 
 /* Sprawlopolis specific game settings */
+var hardMode = false;
 var useBeaches, useZone = false;
 var beachesGoal, zoneGoal = false;
 
@@ -99,15 +100,12 @@ function getGameSettings()
     toggleExpansion("exp-1", useExp1);
     toggleExpansion("exp-2", useExp2);
 
-    if (mode == "combopolis")
+    if (mode == "sprawlopolis")
     {
-        useExp3 = $('#use-exp3').prop('checked');
-        useExp4 = $('#use-exp4').prop('checked');
-        toggleExpansion("exp-3", useExp3);
-        toggleExpansion("exp-4", useExp4);
+        hardMode = $('#use-hard').prop('checked');
     }
 
-    // Sprawlopolis expansions settings
+    // Sprawlopolis/Combopolis expansions settings
     if (mode != "agropolis")
     {
         useBeaches = $('#use-beaches').prop('checked');
@@ -116,6 +114,14 @@ function getGameSettings()
         toggleExpansion("zone-score", useZone);
         zoneGoal = document.getElementById("zone").value;
         beachesGoal = document.getElementById("beaches").value;
+    }
+
+    if (mode == "combopolis")
+    {
+        useExp3 = $('#use-exp3').prop('checked');
+        useExp4 = $('#use-exp4').prop('checked');
+        toggleExpansion("exp-3", useExp3);
+        toggleExpansion("exp-4", useExp4);
     }
 
     // Agropolis specific settings
@@ -307,6 +313,10 @@ function formatText(data)
         {
             text += "\nFeed Fees";
         }
+        if (hardMode)
+        {
+            text += "\nHard Mode";
+        }
 
         text += "\n\n";
     }
@@ -317,6 +327,10 @@ function formatText(data)
         if (useFeedFees)
         {
             text += "\nFeed Fees";
+        }
+        if (hardMode)
+        {
+            text += "\nHard Mode";
         }
 
         text += "\n\n";
@@ -359,7 +373,19 @@ function formatText(data)
     }
     else
     {
-        if (perBlock)
+        if (hardMode)
+        {
+            var blocks = [document.getElementById('blocks-1'), document.getElementById('blocks-2'),
+            document.getElementById('blocks-3'), document.getElementById('blocks-4')];
+
+            var sorted = blocks.sort(function (a, b)
+            {
+                return (sanitiseNumbers(b.value) - sanitiseNumbers(a.value));
+            });
+
+            text += sorted[0].getAttribute("placeholder") + ": " + sanitiseNumbers(sorted[0].value) + "\n";
+        }
+        else if (perBlock)
         {
             text += document.getElementById("blocks-1").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById('blocks-1').value) + "\n";
             text += document.getElementById("blocks-2").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById('blocks-2').value) + "\n";
@@ -412,6 +438,18 @@ function tallyScore()
         {
             score += sanitiseNumbers(highBlocks[i].value);
         }
+    }
+    else if (hardMode)
+    {
+        var blocks = [document.getElementById('blocks-1'), document.getElementById('blocks-2'),
+        document.getElementById('blocks-3'), document.getElementById('blocks-4')];
+
+        var sorted = blocks.sort(function (a, b)
+        {
+            return (sanitiseNumbers(b.value) - sanitiseNumbers(a.value));
+        });
+
+        score += sanitiseNumbers(sorted[0].value);
     }
     else
     {

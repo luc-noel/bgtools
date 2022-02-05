@@ -75,7 +75,7 @@ var goals = [, , ,]; //Stores the index of the goal from the original game list
 // Agropolis Exp1 = Points of Interest, Exp2 = Invasion
 // Sprawlopolis Exp1 = Points of Interest, Exp2 = Wrecktar
 // Combopolis Exp1 = POI (Sprawlopolis), Wrecktar, POI (Agropolis), Invasion
-var usePar, perBlock, useExp1, useExp2, useExp3, useExp4 = false;
+var easyMode, usePar, perBlock, useExp1, useExp2, useExp3, useExp4 = false;
 
 /* Agropolis specific game settings */
 var useFeedFees = false;
@@ -93,12 +93,13 @@ function setMode(name)
 /* Get game settings, called on page load */
 function getGameSettings()
 {
+    easyMode = $('#use-easy').prop('checked');
     usePar = $('#use-par').prop('checked');
     perBlock = $('#per-block').prop('checked');
     useExp1 = $('#use-exp1').prop('checked');
     useExp2 = $('#use-exp2').prop('checked');
-    toggleExpansion("exp-1", useExp1);
-    toggleExpansion("exp-2", useExp2);
+    toggleReadonly("exp-1", useExp1);
+    toggleReadonly("exp-2", useExp2);
 
     if (mode == "sprawlopolis")
     {
@@ -110,8 +111,8 @@ function getGameSettings()
     {
         useBeaches = $('#use-beaches').prop('checked');
         useZone = $('#use-zone').prop('checked');
-        toggleExpansion("beaches-score", useBeaches);
-        toggleExpansion("zone-score", useZone);
+        toggleReadonly("beaches-score", useBeaches);
+        toggleReadonly("zone-score", useZone);
         zoneGoal = document.getElementById("zone").value;
         beachesGoal = document.getElementById("beaches").value;
     }
@@ -120,8 +121,8 @@ function getGameSettings()
     {
         useExp3 = $('#use-exp3').prop('checked');
         useExp4 = $('#use-exp4').prop('checked');
-        toggleExpansion("exp-3", useExp3);
-        toggleExpansion("exp-4", useExp4);
+        toggleReadonly("exp-3", useExp3);
+        toggleReadonly("exp-4", useExp4);
     }
 
     // Agropolis specific settings
@@ -138,7 +139,7 @@ function getGameSettings()
 
 /* Activate/deactive and expansion for scoring */
 /* Takes the expansion id name and its bool as the input, switches the bool value */
-function toggleExpansion(name, bool)
+function toggleReadonly(name, bool)
 {
     bool = !bool;
 
@@ -317,6 +318,10 @@ function formatText(data)
         {
             text += "\nHard Mode";
         }
+        if (easyMode)
+        {
+            text += "\nEasy Mode";
+        }
 
         text += "\n\n";
     }
@@ -331,6 +336,10 @@ function formatText(data)
         if (hardMode)
         {
             text += "\nHard Mode";
+        }
+        if (easyMode)
+        {
+            text += "\nEasy Mode";
         }
 
         text += "\n\n";
@@ -419,7 +428,14 @@ function formatText(data)
     }
 
     // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
-    text += "Roads: -" + Math.abs(sanitiseNumbers(document.getElementById('roads').value));
+    if (!easyMode)
+    {
+        text += "Roads: -" + Math.abs(sanitiseNumbers(document.getElementById('roads').value));
+    }
+    else
+    {
+        text += "Roads: (-" + Math.abs(sanitiseNumbers(document.getElementById('roads').value)) + ")";
+    }
 
     return text;
 }
@@ -457,9 +473,6 @@ function tallyScore()
             + sanitiseNumbers(document.getElementById('blocks-3').value) + sanitiseNumbers(document.getElementById('blocks-4').value);
     }
 
-    // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
-    score -= Math.abs(sanitiseNumbers(document.getElementById('roads').value));
-
     if (useExp1)
     {
         score += sanitiseNumbers(document.getElementById("exp-1").value);
@@ -487,6 +500,12 @@ function tallyScore()
         {
             score += sanitiseNumbers(document.getElementById("zone-score").value);
         }
+    }
+
+    // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
+    if (!easyMode)
+    {
+        score -= Math.abs(sanitiseNumbers(document.getElementById('roads').value));
     }
 
     if (usePar)

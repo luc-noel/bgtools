@@ -71,20 +71,26 @@
                 <label for="use-exp2">Use Invasion</label>
               </div>
             </div>
-            <div class="flex-row-center">
-              <div class="custom-checkbox custom-tooltip">
-                <span class="tooltiptext">Format block scores into separate items? By default they are added together
-                  onto a single Blocks line.</span>
-                <input type="checkbox" id="per-block" onchange="updateScores(agropolis)">
-                <label for="per-block">Separate Blocks</label>
-              </div>
-              <div class="custom-checkbox custom-tooltip">
-                <span class="tooltiptext">Format points using par scoring? The target score is subtracted from your
-                  points, so that a score of 0 or higher means the goal scores have been met, while a negative score is
-                  a loss.</span>
-                <input type="checkbox" id="use-par" onchange="updateScores(agropolis)">
-                <label for="use-par">Use Par Scoring</label>
-              </div>
+          </div>
+          <div class="flex-row-center">
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Play using Easy mode rules? Roads will not be subtracted from the final
+                score.</span>
+              <input type="checkbox" id="use-easy" onchange="updateScores(agropolis)">
+              <label for="use-easy">Easy Mode</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Format block scores into separate items? By default they are added together onto
+                a single Blocks line.</span>
+              <input type="checkbox" id="per-block" onchange="updateScores(agropolis)">
+              <label for="per-block">Separate Blocks</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Format points using par scoring? The target score is subtracted from your
+                points, so that a score of 0 or higher means the goal scores have been met, while a negative score is a
+                loss.</span>
+              <input type="checkbox" id="use-par" onchange="updateScores(agropolis)">
+              <label for="use-par">Use Par Scoring</label>
             </div>
           </div>
         </div>
@@ -137,6 +143,8 @@
         </div>
       </div>
     </div>
+  </div>
+  </div>
 </body>
 
 </html>

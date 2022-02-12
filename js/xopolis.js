@@ -226,12 +226,6 @@ function updateScores(data)
     document.getElementById("clipboard-preview").innerText = "Clipboard Preview:\n" + copyText;
 }
 
-function copyToClipboard()
-{
-    navigator.clipboard.writeText(copyText);
-    alert("Copied scoring to clipboard.");
-}
-
 /* Initialise the dropdowns, fills them from the necessary list*/
 function setGoalDropdowns(data)
 {

@@ -344,6 +344,10 @@ hr {
   max-width: 140px;
 }
 
+.min-width-80 {
+  min-width: 80px;
+}
+
 ol.publication {
   display: flex;
   flex-direction: column-reverse;

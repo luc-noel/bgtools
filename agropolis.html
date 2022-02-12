@@ -17,6 +17,7 @@
   <script src="js/widgets.js"></script>
   <script src="js/custom.js"></script>
   <script src="js/xopolis.js"></script>
+  <script src="js/copyToClipboard.js"></script>
   <script>
     window.onload = function ()
     {
@@ -42,10 +43,10 @@
       <div class="content-table flex-column">
         <div class="flex-item flex-column">
           <div class="content-container center-align-content">
-            <a href="sprawlopolis.html"><img class="image max-width-140" style="padding-right: 10px;"
+            <a href="sprawlopolis.html"><img class="image max-width-140 min-width-80" style="padding-right: 10px;"
                 src="img/sprawlopolis-logo.png"></a>
             <img class="image max-width-400" src="img/agropolis-logo.png">
-            <a href="combopolis.html"><img class="image max-width-140" style="padding-left: 10px;"
+            <a href="combopolis.html"><img class="image max-width-140 min-width-80" style="padding-left: 10px;"
                 src="img/combopolis-logo.png"></a>
           </div>
           <h2 class="text-center">Score Formatter</h2>
@@ -137,8 +138,9 @@
         <div class="content-container center-align-content add-top-margin">
           <div class="custom-tooltip">
             <span class="tooltiptext" id="clipboard-preview">Clipboard Preview</span>
-            <button class="custom-button custom-button-primary" width=250px onclick="copyToClipboard()">Copy to
-              Clipboard</button>
+            <button class="custom-button custom-button-primary" width=250px
+              onclick="copyToClipboard(copyText, 'Copied scoring to clipboard.', 'Could not copy directly to keyboard. Scoring outputted below for copy/pasting\n' + copyText)">Copy
+              to Clipboard</button>
           </div>
         </div>
       </div>

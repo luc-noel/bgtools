@@ -336,6 +336,11 @@ hr {
   margin-bottom: 10px;
 }
 
+.image-block
+{
+  display: block;
+}
+
 .max-width-400 {
   max-width: 400px;
 }

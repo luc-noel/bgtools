@@ -53,15 +53,15 @@ var data = {
         ],
     "tiles":
         [
-            { "height": 0, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "img/ufs-tile0a.png" },
-            { "height": 1, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "img/ufs-tile1a.png" },
-            { "height": 2, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "img/ufs-tile2a.png" },
-            { "height": 3, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "img/ufs-tile3a.png" },
-            { "height": 0, "stars": [1, 2], "flipped": false, "unlock": 2, "image": "img/ufs-tile0b.png" },
-            { "height": 2, "stars": [1, 2], "flipped": false, "unlock": 3, "image": "img/ufs-tile2b.png" },
-            { "height": 3, "stars": [1, 2], "flipped": false, "unlock": 3, "image": "img/ufs-tile3b.png" },
-            { "height": 1, "stars": [1, 2], "flipped": false, "unlock": 4, "image": "img/ufs-tile1b.png" },
-            { "height": 4, "stars": [0, 0], "flipped": false, "unlock": 4, "image": "img/ufs-tile4.png" }
+            { "height": 0, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile0a" },
+            { "height": 1, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile1a" },
+            { "height": 2, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile2a" },
+            { "height": 3, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile3a" },
+            { "height": 0, "stars": [1, 2], "flipped": false, "unlock": 2, "image": "ufs-tile0b" },
+            { "height": 2, "stars": [1, 2], "flipped": false, "unlock": 3, "image": "ufs-tile2b" },
+            { "height": 3, "stars": [1, 2], "flipped": false, "unlock": 3, "image": "ufs-tile3b" },
+            { "height": 1, "stars": [1, 2], "flipped": false, "unlock": 4, "image": "ufs-tile1b" },
+            { "height": 4, "stars": [0, 0], "flipped": false, "unlock": 4, "image": "ufs-tile4" }
         ]
 }
 
@@ -126,9 +126,7 @@ function generateByDifficulty()
         difficultyCount -= 0.5;
         damagedText = " (Damaged)";
     }
-    console.log("City added: " + difficultyCount);
 
-    // TODO: Crashes when only "Use Mission" is toggled
     if (useMission)
     {
         // Reduce the randomiser range by 1 to omit Final Battle mission from selection
@@ -137,7 +135,6 @@ function generateByDifficulty()
         // Missions increase difficulty by 1
         difficultyCount += 1.0;
     }
-    console.log("Mission added: " + difficultyCount);
 
     // Array to pick characters
     // When a character has already been picked remove their index from this array
@@ -186,7 +183,6 @@ function generateByDifficulty()
         // Failsafe, if we try to generate too many times dump out and regenerate the whole game set-up
         if (attempts > 5)
         {
-            console.log("Retrying generation.");
             attempts = 0;
             generateByDifficulty();
         }
@@ -194,11 +190,9 @@ function generateByDifficulty()
         {
             randomisedDifficulty = randomiseSkyTiles(difficultyRange[0] - difficultyCount);
             attempts += 1;
-            console.log("Attempted difficulty: " + (randomisedDifficulty + difficultyCount));
         }
     } while (randomisedDifficulty + difficultyCount < difficultyRange[0] | randomisedDifficulty + difficultyCount > difficultyRange[1]);
 
-    console.log("Tile difficulty: " + randomisedDifficulty);
     difficultyCount += randomisedDifficulty;
 
     // Visualise difficulty with stars
@@ -223,21 +217,11 @@ function generateByDifficulty()
         starText += "½";
     }
 
-    // TEMP: TILE VISUAL
-    var tileText = "";
-
-    for (var i = 0; i < randomTiles.length; i++)
-    {
-        t = randomTiles[i];
-        tileText += t.height + "." + t.unlock;
-        tileText += " - "
-        tileText += t.flipped == true ? t.stars[1] + " (flipped)" : t.stars[0];
-        tileText += "<br>";
-    }
-
-    document.getElementById("tilecheck").innerHTML = tileText;
-
-    console.log("Final Difficulty: " + difficultyCount);
+    // Assign tile images
+    document.getElementById("tile-vis0").src = (randomTiles[0].flipped ? randomTiles[0].image + "-flipped" : randomTiles[0]) + ".png";
+    document.getElementById("tile-vis1").src = (randomTiles[1].flipped ? randomTiles[1].image + "-flipped" : randomTiles[1]) + ".png";
+    document.getElementById("tile-vis2").src = (randomTiles[2].flipped ? randomTiles[2].image + "-flipped" : randomTiles[2]) + ".png";
+    document.getElementById("tile-vis3").src = (randomTiles[3].flipped ? randomTiles[3].image + "-flipped" : randomTiles[3]) + ".png";
 
     document.getElementById("star-difficulty").innerHTML = starText;
     document.getElementById("city").innerHTML = data.cities[randCity].name + damagedText;

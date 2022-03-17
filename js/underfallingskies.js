@@ -218,10 +218,10 @@ function generateByDifficulty()
     }
 
     // Assign tile images
-    document.getElementById("tile-vis0").src = (randomTiles[0].flipped ? randomTiles[0].image + "-flipped" : randomTiles[0]) + ".png";
-    document.getElementById("tile-vis1").src = (randomTiles[1].flipped ? randomTiles[1].image + "-flipped" : randomTiles[1]) + ".png";
-    document.getElementById("tile-vis2").src = (randomTiles[2].flipped ? randomTiles[2].image + "-flipped" : randomTiles[2]) + ".png";
-    document.getElementById("tile-vis3").src = (randomTiles[3].flipped ? randomTiles[3].image + "-flipped" : randomTiles[3]) + ".png";
+    document.getElementById("tile-vis3").src = "img/" + (randomTiles[3].flipped ? randomTiles[3].image + "-flipped" : randomTiles[3].image) + ".png";
+    document.getElementById("tile-vis2").src = "img/" + (randomTiles[2].flipped ? randomTiles[2].image + "-flipped" : randomTiles[2].image) + ".png";
+    document.getElementById("tile-vis1").src = "img/" + (randomTiles[1].flipped ? randomTiles[1].image + "-flipped" : randomTiles[1].image) + ".png";
+    document.getElementById("tile-vis0").src = "img/" + (randomTiles[0].flipped ? randomTiles[0].image + "-flipped" : randomTiles[0].image) + ".png";
 
     document.getElementById("star-difficulty").innerHTML = starText;
     document.getElementById("city").innerHTML = data.cities[randCity].name + damagedText;
@@ -235,6 +235,14 @@ function randomiseSkyTiles(targetDifficulty)
 {
     randomTiles = [{}, {}, {}, {}];
     var difficulty = 0;
+
+    // For the very specific scenario of a Low difficulty game with only Use Mission on
+    // We only play with the base game tiles and never flip any
+    if (targetDifficulty < 1 & !useCharacters & useMission)
+    {
+        randomTiles = [data.tiles[0], data.tiles[1], data.tiles[2], data.tiles[3]];
+        return difficulty;
+    }
 
     // Pick a tile for each height from the options in data
     for (var height = 0; height < 4; height++)

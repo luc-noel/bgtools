@@ -188,8 +188,8 @@ function generateByDifficulty()
         }
         else
         {
-            randomisedDifficulty = randomiseSkyTiles(difficultyRange[0] - difficultyCount);
             attempts += 1;
+            randomisedDifficulty = randomiseSkyTiles(difficultyRange[0] - difficultyCount);
         }
     } while (randomisedDifficulty + difficultyCount < difficultyRange[0] | randomisedDifficulty + difficultyCount > difficultyRange[1]);
 
@@ -238,7 +238,7 @@ function randomiseSkyTiles(targetDifficulty)
 
     // For the very specific scenario of a Low difficulty game with only Use Mission on
     // We only play with the base game tiles and never flip any
-    if (targetDifficulty < 1 & !useCharacters & useMission)
+    if (difficultyValue == 0 & !useCharacters & useMission)
     {
         randomTiles = [data.tiles[0], data.tiles[1], data.tiles[2], data.tiles[3]];
         return difficulty;
@@ -300,22 +300,86 @@ function randomiseSkyTiles(targetDifficulty)
 function generateCampaign()
 {
     // Character team array
-    var team = [];
+    var team = [, , , , ,];
 
-    // Generate Part I
+    // Array to pick characters
+    // When a character has already been picked remove their index from this array
+    var charIndexArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+    // Randomise character team of characters
+    for (var i = 0; i < 2; i++)
+    {
+        // Reduce ranges by i so that the second time through they've shifted to the new range of 3 choices instead of 4
+        var char1 = getRandomInt(0, 3 - i);
+        var char2 = getRandomInt(4 - i, 7 - i * 2);
+        var char3 = getRandomInt(8 - i * 2, 11 - i * 3);
+
+        // Add character choices into correct array positions
+        team.splice(0 + i, 1, data.characters[charIndexArray[char1]]);
+        team.splice(2 + i, 1, data.characters[charIndexArray[char2]]);
+        team.splice(4 + i, 1, data.characters[charIndexArray[char3]]);
+
+        // Remove characters from the options pool
+        charIndexArray.splice(char1, 1);
+        charIndexArray.splice(char2 - 1, 1);
+        charIndexArray.splice(char3 - 2, 1);
+    }
+
+    // Fill Part I values
     document.getElementById("city1-1").innerHTML = "";
-    document.getElementById("char1-1").innerHTML = "";
+    document.getElementById("char1-1").innerHTML = team[0].name;
     document.getElementById("miss1-1").innerHTML = "";
     document.getElementById("city1-2").innerHTML = "";
-    document.getElementById("char1-2").innerHTML = "";
+    document.getElementById("char1-2").innerHTML = team[1].name;
     document.getElementById("miss1-2").innerHTML = "";
+
+    // Part II Characters
+    team[0].upgraded = true;
+    team[1].upgraded = true;
+
+    // Basically a variable used for a coin flip
+    // Decides which of two previous characters to assign to the two new battles
+    var rand = getRandomInt(0, 1);
+    var char1Text = team[2].name + "<br>" + team[rand].name + " (Upgraded)";
+    var char2Text = team[3].name + "<br>" + team[Math.abs(rand - 1)].name + " (Upgraded)";
+
+    // Fill Part II values
+    document.getElementById("city2-1").innerHTML = "";
+    document.getElementById("char2-1").innerHTML = char1Text;
+    document.getElementById("miss2-1").innerHTML = "";
+    document.getElementById("city2-2").innerHTML = "";
+    document.getElementById("char2-2").innerHTML = char2Text;
+    document.getElementById("miss2-2").innerHTML = "";
+
+    // Part III Characters
+    team[2].upgraded = true;
+    team[3].upgraded = true;
+
+    rand = getRandomInt(0, 1);
+    char1Text = team[4].name + "<br>" + team[rand].name + " (Upgraded)";
+    char2Text = team[5].name + "<br>" + team[Math.abs(rand - 1)].name + " (Upgraded)";
+
+    rand = getRandomInt(0, 1);
+    char1Text += "<br>" + team[rand + 2].name + " (Upgraded)";
+    char2Text += "<br>" + team[Math.abs(rand - 1) + 2].name + " (Upgraded)";
+
+    // Fill Part III values
+    document.getElementById("city3-1").innerHTML = "";
+    document.getElementById("char3-1").innerHTML = char1Text;
+    document.getElementById("miss3-1").innerHTML = "";
+    document.getElementById("city3-2").innerHTML = "";
+    document.getElementById("char3-2").innerHTML = char2Text;
+    document.getElementById("miss3-2").innerHTML = "";
+
+    // Fill Part IV values
+    document.getElementById("city4").innerHTML = "";
+    document.getElementById("char4").innerHTML = team[0].name;
+    document.getElementById("miss4").innerHTML = "";
 }
 
-// Randomise a number to the nearest 0.5
-// Multiply inputs by 2 then divide output by 2 to get nearest 0.5 value
-function getRandomInclusiveHalf(min, max)
+function getRandomInt(min, max)
 {
-    min = Math.ceil(min * 2);
-    max = Math.floor(max * 2);
-    return Math.floor(Math.random() * (max - min + 1) + min) / 2; //The maximum is inclusive and the minimum is inclusive
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }

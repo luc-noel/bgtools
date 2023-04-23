@@ -53,15 +53,15 @@ var data = {
         ],
     "tiles":
         [
-            { "height": 0, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile0a" },
-            { "height": 1, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile1a" },
-            { "height": 2, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile2a" },
-            { "height": 3, "stars": [0, 1], "flipped": false, "unlock": 0, "image": "ufs-tile3a" },
-            { "height": 0, "stars": [1, 2], "flipped": false, "unlock": 2, "image": "ufs-tile0b" },
-            { "height": 2, "stars": [1, 2], "flipped": false, "unlock": 3, "image": "ufs-tile2b" },
-            { "height": 3, "stars": [1, 2], "flipped": false, "unlock": 3, "image": "ufs-tile3b" },
-            { "height": 1, "stars": [1, 2], "flipped": false, "unlock": 4, "image": "ufs-tile1b" },
-            { "height": 4, "stars": [0, 0], "flipped": false, "unlock": 4, "image": "ufs-tile4" }
+            { "height": 0, "difficulty": 0, "flipped": false, "unlock": 0, "image": "ufs-tile0a" },
+            { "height": 1, "difficulty": 0, "flipped": false, "unlock": 0, "image": "ufs-tile1a" },
+            { "height": 2, "difficulty": 0, "flipped": false, "unlock": 0, "image": "ufs-tile2a" },
+            { "height": 3, "difficulty": 0, "flipped": false, "unlock": 0, "image": "ufs-tile3a" },
+            { "height": 0, "difficulty": 1, "flipped": false, "unlock": 2, "image": "ufs-tile0b" },
+            { "height": 2, "difficulty": 1, "flipped": false, "unlock": 3, "image": "ufs-tile2b" },
+            { "height": 3, "difficulty": 1, "flipped": false, "unlock": 3, "image": "ufs-tile3b" },
+            { "height": 1, "difficulty": 1, "flipped": false, "unlock": 4, "image": "ufs-tile1b" },
+            { "height": 4, "difficulty": 0, "flipped": false, "unlock": 4, "image": "ufs-tile4" }
         ]
 }
 
@@ -116,13 +116,11 @@ function generateByDifficulty()
 
     // Pick a random city to play
     var randCity = Math.floor(Math.random() * data.cities.length);
-    // Undamaged Cities reduce difficulty by 0.5
-    difficultyCount -= 0.5;
 
     // Randomise damaging the city
     if (Math.random() >= 0.5)
     {
-        // Damaged Cities reduce difficulty by an additional 0.5
+        // Damaged Cities reduce difficulty by 0.5
         difficultyCount -= 0.5;
         damagedText = " (Damaged)";
     }
@@ -199,6 +197,7 @@ function generateByDifficulty()
     var starText = "";
 
     // Reduce difficultyCount by 0.5 otherwise it gets rounded up to the next whole value
+    // So that when difficulty = 2.5 we want to add only 2 solid stars
     for (i = 0; i < difficultyCount - 0.5; i++)
     {
         starText += "&#9733;";
@@ -261,7 +260,7 @@ function randomiseSkyTiles(targetDifficulty)
         // Choose a single tile for the height
         var tile = tiles[Math.floor(Math.random() + 0.5)];
         tile.flipped = false; // Make sure the tile isn't flipped yet
-        difficulty += tile.stars[0];
+        difficulty += tile.difficulty;
 
         // Send all the tile info to randomTiles for passing to the HTML page later
         // Deletes the previous tile at that height if there was one
@@ -269,28 +268,30 @@ function randomiseSkyTiles(targetDifficulty)
     }
 
     // Which tile heights have yet to be randomised
-    // Randomising the order the tiles are flipped in avoids patterns of the lower/higher floors being more likely to be flipped
+    // Randomising the order the tiles are flipped, avoids patterns of the lower/higher floors being more likely to be flipped
     var tileLevels = [0, 1, 2, 3];
 
     // Flip tiles to add to difficulty
     while (difficulty < targetDifficulty)
     {
-        // If we got here randomised tiles weren't high enough value
+        // If we got here randomised tiles couldn't attain a high enough value
         // Punt us out of here and let the other generator retry
         if (tileLevels.length == 0)
         {
             break;
         }
 
+        // When a tile is flipped the difficulty is always 1 higher thant the base star value
         difficulty += 1;
 
-        var h = Math.floor(Math.random() * tileLevels.length);
-        var tile = randomTiles[tileLevels[h]];
+        // Get a random tile from tileLevels
+        var level = Math.floor(Math.random() * tileLevels.length);
+        var tile = randomTiles[tileLevels[level]];
 
         tile.flipped = true;
 
-        randomTiles.splice(tileLevels[h], 1, tile); // Update the tile with the flipped value
-        tileLevels.splice(h, 1); // Remove height option from being randomised again
+        randomTiles.splice(tileLevels[level], 1, tile); // Update the tile with the flipped value
+        tileLevels.splice(level, 1); // Remove height option from being randomised again
     }
 
     return difficulty;

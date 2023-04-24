@@ -1,7 +1,7 @@
 /*************************************************************************
  * Your custom CSS file
  *************************************************************************/
- 
+
 .custom-dropdown {
   width: 240px;
 }
@@ -30,12 +30,13 @@
   text-align: center;
   padding: 5px 0;
   border-radius: 6px;
- 
+
   /* Position the tooltip text */
   position: absolute;
   left: 50%;
   bottom: 110%;
-  transform: translateX(-50%); /* Centering */
+  transform: translateX(-50%);
+  /* Centering */
   z-index: 1;
 }
 
@@ -44,8 +45,7 @@
   visibility: visible;
 }
 
-.custom-checkbox
-{
+.custom-checkbox {
   padding: 0;
   text-align: center;
   outline: none;

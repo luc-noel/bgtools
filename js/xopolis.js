@@ -137,7 +137,7 @@ function getGameSettings()
     goals.splice(2, 1, document.getElementById("goals-3").value);
 }
 
-/* Activate/deactive and expansion for scoring */
+/* Activate/deactive an expansion for scoring */
 /* Takes the expansion id name and its bool as the input, switches the bool value */
 function toggleReadonly(name, bool)
 {

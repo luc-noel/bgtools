@@ -77,6 +77,9 @@ function getGameSettings()
     useMission = $('#use-mission').prop('checked');
 }
 
+// Holds game set-up text for copying into a play log comment
+var copyText = "";
+
 /* Generate a single Under Falling Skies game */
 /* Randomises city, mission, tiles, and characters based on desired difficulty */
 function generateByDifficulty()
@@ -93,6 +96,7 @@ function generateByDifficulty()
     var difficultyRange = [,];
     var damagedText = "";
     var charText = "---";
+    copyText = "";
 
     switch (difficultyValue)
     {
@@ -116,6 +120,7 @@ function generateByDifficulty()
 
     // Pick a random city to play
     var randCity = Math.floor(Math.random() * data.cities.length);
+    copyText += "\nCity: " + data.cities[randCity].name;
 
     // Randomise damaging the city
     if (Math.random() >= 0.5)
@@ -123,6 +128,7 @@ function generateByDifficulty()
         // Damaged Cities reduce difficulty by 0.5
         difficultyCount -= 0.5;
         damagedText = " (Damaged)";
+        copyText += " (Damaged)";
     }
 
     if (useMission)
@@ -132,6 +138,8 @@ function generateByDifficulty()
         document.getElementById("miss").innerHTML = data.missions[randMission].name;
         // Missions increase difficulty by 1
         difficultyCount += 1.0;
+
+        copyText += "\nMission: " + data.missions[randMission].name;
     }
 
     // Array to pick characters
@@ -145,6 +153,7 @@ function generateByDifficulty()
         var count = 0; // Number of characters added
 
         charText = "";
+        copyText += "\nCharacters: ";
 
         while (count < rand)
         {
@@ -152,10 +161,12 @@ function generateByDifficulty()
             if (charText)
             {
                 charText += "<br>";
+                copyText += ", "
             }
 
             var randCharacter = Math.floor(Math.random() * charIndexArray.length);
             charText += data.characters[charIndexArray[randCharacter]].name;
+            copyText += data.characters[charIndexArray[randCharacter]].name;
             charIndexArray.splice(randCharacter, 1);
 
             // Non-upgraded characters reduce difficulty by 0.5
@@ -167,10 +178,12 @@ function generateByDifficulty()
                 // Upgraded characters reduce difficulty by an additional 0.5
                 difficultyCount -= 0.5;
                 charText += " (Upgraded)";
+                copyText += " (Upgraded)";
             }
 
             count += 1;
         }
+
     }
 
     var randomisedDifficulty = 0; // Hold last value of randomised tile difficulty
@@ -192,6 +205,8 @@ function generateByDifficulty()
     } while (randomisedDifficulty + difficultyCount < difficultyRange[0] | randomisedDifficulty + difficultyCount > difficultyRange[1]);
 
     difficultyCount += randomisedDifficulty;
+    var suffix = copyText;
+    copyText = "Difficulty: " + difficultyCount + suffix;
 
     // Visualise difficulty with stars
     var starText = "";
@@ -225,6 +240,8 @@ function generateByDifficulty()
     document.getElementById("star-difficulty").innerHTML = starText;
     document.getElementById("city").innerHTML = data.cities[randCity].name + damagedText;
     document.getElementById("char").innerHTML = charText;
+
+    document.getElementById("clipboard-preview").innerText = "Clipboard Preview\n" + copyText;
 }
 
 // One array item per height level of tiles

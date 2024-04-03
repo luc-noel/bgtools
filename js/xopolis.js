@@ -31,6 +31,28 @@ var combopolis =
         { name: "Supply and Demand", score: 15, fee: -1, livestock: [2, 2, 2] }
     ]
 
+var naturopolis =
+    [
+        { name: "Bigfoot Country", score: 13 },
+        { name: "Dream Streams", score: 16 },
+        { name: "Drivin' Daisies", score: 6 },
+        { name: "Happy Campers", score: 12 },
+        { name: "Impressive Range", score: 15 },
+        { name: "Lake Mistake", score: 2 },
+        { name: "Natural Selection", score: 4 },
+        { name: "Naturopolis", score: 18 },
+        { name: "Patchwork Park", score: 9 },
+        { name: "River Runs Through It", score: 3 },
+        { name: "Run Forest Run", score: 11 },
+        { name: "Second Nature", score: 7 },
+        { name: "Sniff or Swim", score: 14 },
+        { name: "Straight and Narrow", score: 5 },
+        { name: "Summit Up", score: 17 },
+        { name: "Trees in Threes", score: 1 },
+        { name: "Twin Peaks", score: 10 },
+        { name: "Waterways and Means", score: 8 }
+    ]
+
 var sprawlopolis =
     [
         { name: "Block Party", score: 4 },
@@ -85,6 +107,10 @@ var hardMode = false;
 var useBeaches, useZone = false;
 var beachesGoal, zoneGoal = false;
 
+/* Naturopolis specific game settings */
+var doubleRoads = false;
+var defaultSetting = true; // Bool to check if the doubleRoads were already turned on by default
+
 function setMode(name)
 {
     mode = name;
@@ -93,13 +119,17 @@ function setMode(name)
 /* Get game settings, called on page load */
 function getGameSettings()
 {
-    easyMode = $('#use-easy').prop('checked');
     usePar = $('#use-par').prop('checked');
     perBlock = $('#per-block').prop('checked');
-    useExp1 = $('#use-exp1').prop('checked');
-    useExp2 = $('#use-exp2').prop('checked');
-    toggleReadonly("exp-1", useExp1);
-    toggleReadonly("exp-2", useExp2);
+
+    if (mode != "naturopolis")
+    {
+        easyMode = $('#use-easy').prop('checked');
+        useExp1 = $('#use-exp1').prop('checked');
+        useExp2 = $('#use-exp2').prop('checked');
+        toggleReadonly("exp-1", useExp1);
+        toggleReadonly("exp-2", useExp2);
+    }
 
     if (mode == "sprawlopolis")
     {
@@ -107,7 +137,7 @@ function getGameSettings()
     }
 
     // Sprawlopolis/Combopolis expansions settings
-    if (mode != "agropolis")
+    if (mode != "agropolis" && mode != "naturopolis")
     {
         useBeaches = $('#use-beaches').prop('checked');
         useZone = $('#use-zone').prop('checked');
@@ -129,6 +159,22 @@ function getGameSettings()
     if (mode == "agropolis")
     {
         useFeedFees = $('#feed-fees').prop('checked');
+    }
+
+    // Naturopolis specific settings
+    if (mode == "naturopolis")
+    {
+        if (!defaultSetting)
+        {
+            doubleRoads = $("#double-roads").prop("checked");
+        }
+        else
+        {
+            // Set double roads on by default
+            $("#double-roads").prop("checked", true);
+            doubleRoads = true;
+            defaultSetting = false;
+        }
     }
 
     // When fetching goals replace the old ones
@@ -275,7 +321,7 @@ function setGoalDropdowns(data)
         document.getElementById("goals-3").innerHTML = combopolisItems;
     }
 
-    if (mode != "agropolis")
+    if (mode != "agropolis" && mode != "naturopolis")
     {
         var beachItems = [];
         var zoneItems = [];
@@ -343,7 +389,7 @@ function formatText(data)
     text += data[goals[2]].name + ": " + sanitiseNumbers(document.getElementById("goal-3-score").value) + "\n";
 
     // Sprawlopolis expansion scores
-    if (mode != "agropolis")
+    if (mode != "agropolis" && mode != "naturopolis")
     {
         if (useBeaches)
         {
@@ -422,13 +468,20 @@ function formatText(data)
     }
 
     // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
+    var roads = Math.abs(sanitiseNumbers(document.getElementById('roads').value));
+
+    // Naturopolis roads a worth -2 points, auto-deduct if the user selected the option
+    if (doubleRoads)
+    {
+        roads += roads;
+    }
     if (!easyMode)
     {
-        text += "Roads: -" + Math.abs(sanitiseNumbers(document.getElementById('roads').value));
+        text += "Roads: -" + roads;
     }
     else
     {
-        text += "Roads: (-" + Math.abs(sanitiseNumbers(document.getElementById('roads').value)) + ")";
+        text += "Roads: (-" + roads + ")";
     }
 
     return text;
@@ -484,7 +537,7 @@ function tallyScore()
         score += sanitiseNumbers(document.getElementById("exp-4").value);
     }
 
-    if (mode != "agropolis")
+    if (mode != "agropolis" && mode != "naturopolis")
     {
         if (useBeaches)
         {
@@ -496,10 +549,17 @@ function tallyScore()
         }
     }
 
+    // Road scoring
     // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
     if (!easyMode)
     {
         score -= Math.abs(sanitiseNumbers(document.getElementById('roads').value));
+
+        // Roads in Naturopolis are worth -2, so we deduct again
+        if (doubleRoads)
+        {
+            score -= Math.abs(sanitiseNumbers(document.getElementById('roads').value));
+        };
     }
 
     if (usePar)

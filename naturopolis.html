@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Naturopolis Score Formatter - Luc's Gaming Stuff</title>
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="js/xopolis.js"></script>
+  <script src="js/copyToClipboard.js"></script>
+  <script>
+    window.onload = function ()
+    {
+      setMode("naturopolis");
+      setGoalDropdowns(naturopolis);
+      getGameSettings();
+      updateScores(naturopolis);
+    }
+  </script>
+  <style>
+    .menu-index {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <div class="content">
+      <div class="content-table flex-column">
+        <div class="flex-item flex-column">
+          <div class="content-container center-align-content">
+            <a href="agropolis.html"><img class="image max-width-140 min-width-80" src="img/agropolis-logo.png"></a>
+            <img class="image max-width-400" src="img/naturopolis-logo.png" style="padding-left: 20px;">
+            <div class="flex-item flex-column">
+              <a href="sprawlopolis.html"><img class="image max-width-140 min-width-80"
+                  src="img/sprawlopolis-logo.png"></a>
+              <a href="combopolis.html"><img class="image max-width-140 min-width-80" src="img/combopolis-logo.png"></a>
+            </div>
+          </div>
+          <h2 class="text-center">Score Formatter</h2>
+          <p class="text-center no-top-margin">Formats scoring conditions to add as a comment in BGG play logs.</p>
+          <p class="text-center no-top-margin">Hover over the "Copy to Clipboard" button for a preview of the formatted
+            comment.</p>
+          <div class="flex-row-center">
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Auto-multiply road score? The Roads field will deduct 2 points per road you
+                enter instead of deducting a score you pre-calculate.</span>
+              <input type="checkbox" id="double-roads" onchange="updateScores(naturopolis)">
+              <label for="double-roads">Double Roads</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Format block scores into separate items? By default they are added together onto
+                a single Blocks line.</span>
+              <input type="checkbox" id="per-block" onchange="updateScores(naturopolis)">
+              <label for="per-block">Separate Blocks</label>
+            </div>
+            <div class="custom-checkbox custom-tooltip">
+              <span class="tooltiptext">Format points using par scoring? The target score is subtracted from your
+                points, so that a score of 0 or higher means the goal scores have been met, while a negative score is a
+                loss.</span>
+              <input type="checkbox" id="use-par" onchange="updateScores(naturopolis)">
+              <label for="use-par">Use Par Scoring</label>
+            </div>
+          </div>
+          <h1 id="score" class="text-center no-top-margin no-bottom-margin">--/--</h1>
+          <div class="flex-row-center">
+            <div class="control-group">
+              <select id="goals-1" class="custom-dropmenu stretch-on-mobile"
+                onchange="updateScores(naturopolis)"></select>
+              <input id="goal-1-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+                placeholder="Score" autocomplete="off" onchange="updateScores(naturopolis)">
+            </div>
+            <div class="control-group">
+              <select id="goals-2" class="custom-dropmenu stretch-on-mobile"
+                onchange="updateScores(naturopolis)"></select>
+              <input id="goal-2-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+                placeholder="Score" autocomplete="off" onchange="updateScores(naturopolis)">
+            </div>
+            <div class="control-group">
+              <select id="goals-3" class="custom-dropmenu stretch-on-mobile"
+                onchange="updateScores(naturopolis)"></select>
+              <input id="goal-3-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+                placeholder="Score" autocomplete="off" onchange="updateScores(naturopolis)">
+            </div>
+          </div>
+          <div class="flex-row-center">
+            <div class="control-group">
+              <input class="custom-textbox stretch-on-mobile" id="blocks-1" type="text" placeholder="Forest"
+                autocomplete="off" onchange="updateScores(naturopolis)">
+              <input class="custom-textbox stretch-on-mobile" id="blocks-2" type="text" placeholder="Lake"
+                autocomplete="off" onchange="updateScores(naturopolis)">
+              <input class="custom-textbox stretch-on-mobile" id="blocks-3" type="text" placeholder="Meadow"
+                autocomplete="off" onchange="updateScores(naturopolis)">
+              <input class="custom-textbox stretch-on-mobile" id="blocks-4" type="text" placeholder="Mountain"
+                autocomplete="off" onchange="updateScores(naturopolis)">
+            </div>
+          </div>
+          <div class="flex-row-center">
+            <div class="control-group">
+              <input class="custom-textbox stretch-on-mobile" id="roads" type="text" placeholder="Roads"
+                autocomplete="off" onchange="updateScores(naturopolis)">
+            </div>
+          </div>
+          <div class="content-container center-align-content add-top-margin">
+            <div class="custom-tooltip">
+              <span class="tooltiptext" id="clipboard-preview">Clipboard Preview</span>
+              <button class="custom-button custom-button-primary" width=250px
+                onclick="copyToClipboard(copyText, 'Copied scoring to clipboard.', 'Could not copy directly to clipboard. Scoring outputted below for copy/pasting\n' + copyText)">Copy
+                to Clipboard</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

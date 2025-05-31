@@ -41,162 +41,156 @@
   <div class="content-container">
     <div class="content">
       <div class="content-table flex-column">
-        <div class="flex-item flex-column">
-          <div class="content-container center-align-content">
-            <a href="agropolis.html"><img class="image max-width-140 min-width-80" src="img/agropolis-logo.png"></a>
-            <img class="image max-width-400" src="img/combopolis-logo.png" style="padding-left: 20px;">
-            <div class="flex-item flex-column">
-              <a href="naturopolis.html"><img class="image max-width-140 min-width-80"
-                  src="img/naturopolis-logo.png"></a>
-              <a href="sprawlopolis.html"><img class="image max-width-140 min-width-80"
-                  src="img/sprawlopolis-logo.png"></a>
-            </div>
+        <div class="flex-row-center">
+          <img class=" image max-width-400" src="img/combopolis-logo.png">
+        </div>
+        <div class="flex-row-center">
+          <a href="sprawlopolis.html"><img class="image max-width-140 min-width-80" src="img/sprawlopolis-logo.png"></a>
+          <a href="agropolis.html"><img class="image max-width-140 min-width-80" style="padding: 0px 5px 0px 5px"
+              src="img/agropolis-logo.png"></a>
+          <a href="naturopolis.html"><img class="image max-width-140 min-width-80" src="img/naturopolis-logo.png"></a>
+        </div>
+        <h2 class="text-center">Score Formatter</h2>
+        <p class="text-center no-top-margin">Formats scoring conditions to add as a comment in BGG play logs.<br>When
+          scoring Blocks it will choose the two highest point groups from Agropolis and Sprawlopolis each.
+        <p class="text-center no-top-margin">Hover over the "Copy to Clipboard" button for a preview of the formatted
+          comment.</p>
+        <div class="flex-row-center">
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play with the Beaches expansion?</span>
+            <input type="checkbox" id="use-beaches" onchange="updateScores(combopolis)">
+            <label for="use-beaches">Use Beaches</label>
           </div>
-          <h2 class="text-center">Score Formatter</h2>
-          <p class="text-center no-top-margin">Formats scoring conditions to add as a comment in BGG play logs.<br>When
-            scoring Blocks it will choose the two highest point groups from Agropolis and Sprawlopolis each.
-          <p class="text-center no-top-margin">Hover over the "Copy to Clipboard" button for a preview of the formatted
-            comment.</p>
-          <div class="flex-row-center">
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play with the Beaches expansion?</span>
-              <input type="checkbox" id="use-beaches" onchange="updateScores(combopolis)">
-              <label for="use-beaches">Use Beaches</label>
-            </div>
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play with the Construction Zones expansion?</span>
-              <input type="checkbox" id="use-zone" onchange="updateScores(combopolis)">
-              <label for="use-zone">Use Construction Zones</label>
-            </div>
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play with the Sprawlopolis Points of Interest expansion?</span>
-              <input type="checkbox" id="use-exp1" onchange="updateScores(combopolis)">
-              <label for="use-exp1">Use Sprawlopolis Points of Interest</label>
-            </div>
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play with the Construction Zones expansion?</span>
+            <input type="checkbox" id="use-zone" onchange="updateScores(combopolis)">
+            <label for="use-zone">Use Construction Zones</label>
           </div>
-          <div class="flex-row-center">
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play with the Wrecktar expansion?</span>
-              <input type="checkbox" id="use-exp2" onchange="updateScores(combopolis)">
-              <label for="use-exp2">Use Wrecktar</label>
-            </div>
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play with the Agropolis Points of Interest expansion?</span>
-              <input type="checkbox" id="use-exp3" onchange="updateScores(combopolis)">
-              <label for="use-exp3">Use Agropolis Points of Interest</label>
-            </div>
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play with the Invasion expansion?</span>
-              <input type="checkbox" id="use-exp4" onchange="updateScores(combopolis)">
-              <label for="use-exp4">Use Invasion</label>
-            </div>
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play with the Sprawlopolis Points of Interest expansion?</span>
+            <input type="checkbox" id="use-exp1" onchange="updateScores(combopolis)">
+            <label for="use-exp1">Use Sprawlopolis Points of Interest</label>
           </div>
-          <div class="flex-row-center">
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Play using Easy mode rules? Roads will not be subtracted from the final
-                score.</span>
-              <input type="checkbox" id="use-easy" onchange="updateScores(combopolis)">
-              <label for="use-easy">Easy Mode</label>
-            </div>
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Format block scores into separate items? By default they are added together onto
-                a single Blocks line.</span>
-              <input type="checkbox" id="per-block" onchange="updateScores(combopolis)">
-              <label for="per-block">Separate Blocks</label>
-            </div>
-            <div class="custom-checkbox custom-tooltip">
-              <span class="tooltiptext">Format points using par scoring? The target score is subtracted from your
-                points, so that a score of 0 or higher means the goal scores have been met, while a negative score is a
-                loss.</span>
-              <input type="checkbox" id="use-par" onchange="updateScores(combopolis)">
-              <label for="use-par">Use Par Scoring</label>
-            </div>
+        </div>
+        <div class="flex-row-center">
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play with the Wrecktar expansion?</span>
+            <input type="checkbox" id="use-exp2" onchange="updateScores(combopolis)">
+            <label for="use-exp2">Use Wrecktar</label>
           </div>
-          <h1 id="score" class="text-center no-top-margin no-bottom-margin">--/--</h1>
-          <div class="flex-row-center">
-            <div class="control-group">
-              <select id="goals-1" class="custom-dropmenu stretch-on-mobile"
-                onchange="updateScores(combopolis)"></select>
-              <input id="goal-1-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
-                placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-            </div>
-            <div class="control-group">
-              <select id="goals-2" class="custom-dropmenu stretch-on-mobile"
-                onchange="updateScores(combopolis)"></select>
-              <input id="goal-2-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
-                placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-            </div>
-            <div class="control-group">
-              <select id="goals-3" class="custom-dropmenu stretch-on-mobile"
-                onchange="updateScores(combopolis)"></select>
-              <input id="goal-3-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
-                placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-            </div>
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play with the Agropolis Points of Interest expansion?</span>
+            <input type="checkbox" id="use-exp3" onchange="updateScores(combopolis)">
+            <label for="use-exp3">Use Agropolis Points of Interest</label>
           </div>
-          <div class="flex-row-center">
-            <div class="control-group">
-              <select id="beaches" class="custom-dropmenu stretch-on-mobile"
-                onchange="updateScores(combopolis)"></select>
-              <input id="beaches-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
-                placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
-            </div>
-            <div class="control-group">
-              <select id="zone" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(combopolis)"></select>
-              <input id="zone-score" class="custom-textbox stretch-on-mobile" type="text" placeholder="Score"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
-            </div>
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play with the Invasion expansion?</span>
+            <input type="checkbox" id="use-exp4" onchange="updateScores(combopolis)">
+            <label for="use-exp4">Use Invasion</label>
           </div>
-          <div class="flex-row-center">
-            <div class="control-group">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-1" type="text" placeholder="Commercial"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-2" type="text" placeholder="Parks"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-3" type="text" placeholder="Industrial"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-4" type="text" placeholder="Residential"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-            </div>
+        </div>
+        <div class="flex-row-center">
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Play using Easy mode rules? Roads will not be subtracted from the final
+              score.</span>
+            <input type="checkbox" id="use-easy" onchange="updateScores(combopolis)">
+            <label for="use-easy">Easy Mode</label>
           </div>
-          <div class="flex-row-center">
-            <div class="control-group">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-1a" type="text" placeholder="Orchards"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-2a" type="text" placeholder="Cornfields"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-3a" type="text" placeholder="Livestock"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-              <input class="custom-textbox stretch-on-mobile" id="blocks-4a" type="text" placeholder="Vineyards"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-            </div>
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Format block scores into separate items? By default they are added together onto a
+              single Blocks line.</span>
+            <input type="checkbox" id="per-block" onchange="updateScores(combopolis)">
+            <label for="per-block">Separate Blocks</label>
           </div>
-          <div class="flex-row-center">
-            <div class="control-group">
-              <input class="custom-textbox stretch-on-mobile" id="exp-1" type="text"
-                placeholder="Sprawlopolis Points of Interest" inputmode="numeric" autocomplete="off"
-                onchange="updateScores(combopolis)" readonly>
-              <input class="custom-textbox stretch-on-mobile" id="exp-2" type="text" placeholder="Wrecktar"
-                autocomplete="off" onchange="updateScores(combopolis)" readonly>
-              <input class="custom-textbox stretch-on-mobile" id="exp-3" type="text"
-                placeholder="Agropolis Points of Interest" autocomplete="off" inputmode="numeric"
-                onchange="updateScores(combopolis)" readonly>
-              <input class="custom-textbox stretch-on-mobile" id="exp-4" type="text" placeholder="Invasion"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
-              <input class="custom-textbox stretch-on-mobile" id="roads" type="text" placeholder="Roads"
-                autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
-            </div>
+          <div class="custom-checkbox custom-tooltip">
+            <span class="tooltiptext">Format points using par scoring? The target score is subtracted from your points,
+              so that a score of 0 or higher means the goal scores have been met, while a negative score is a
+              loss.</span>
+            <input type="checkbox" id="use-par" onchange="updateScores(combopolis)">
+            <label for="use-par">Use Par Scoring</label>
           </div>
-          <div class="content-container center-align-content add-top-margin">
-            <div class="custom-tooltip">
-              <span class="tooltiptext" id="clipboard-preview">Clipboard Preview</span>
-              <button class="custom-button custom-button-primary" width=250px
-                onclick="copyToClipboard(copyText, 'Copied scoring to clipboard.', 'Could not copy directly to clipboard. Scoring outputted below for copy/pasting\n' + copyText)">Copy
-                to Clipboard</button>
-            </div>
+        </div>
+        <h1 id="score" class="text-center no-top-margin no-bottom-margin">--/--</h1>
+        <div class="flex-row-center">
+          <div class="control-group">
+            <select id="goals-1" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(combopolis)"></select>
+            <input id="goal-1-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+              placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+          </div>
+          <div class="control-group">
+            <select id="goals-2" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(combopolis)"></select>
+            <input id="goal-2-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+              placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+          </div>
+          <div class="control-group">
+            <select id="goals-3" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(combopolis)"></select>
+            <input id="goal-3-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+              placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+          </div>
+        </div>
+        <div class="flex-row-center">
+          <div class="control-group">
+            <select id="beaches" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(combopolis)"></select>
+            <input id="beaches-score" class="custom-textbox stretch-on-mobile" style="margin-right: 10px;" type="text"
+              placeholder="Score" autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
+          </div>
+          <div class="control-group">
+            <select id="zone" class="custom-dropmenu stretch-on-mobile" onchange="updateScores(combopolis)"></select>
+            <input id="zone-score" class="custom-textbox stretch-on-mobile" type="text" placeholder="Score"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
+          </div>
+        </div>
+        <div class="flex-row-center">
+          <div class="control-group">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-1" type="text" placeholder="Commercial"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-2" type="text" placeholder="Parks"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-3" type="text" placeholder="Industrial"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-4" type="text" placeholder="Residential"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+          </div>
+        </div>
+        <div class="flex-row-center">
+          <div class="control-group">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-1a" type="text" placeholder="Orchards"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-2a" type="text" placeholder="Cornfields"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-3a" type="text" placeholder="Livestock"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+            <input class="custom-textbox stretch-on-mobile" id="blocks-4a" type="text" placeholder="Vineyards"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+          </div>
+        </div>
+        <div class="flex-row-center">
+          <div class="control-group">
+            <input class="custom-textbox stretch-on-mobile" id="exp-1" type="text"
+              placeholder="Sprawlopolis Points of Interest" inputmode="numeric" autocomplete="off"
+              onchange="updateScores(combopolis)" readonly>
+            <input class="custom-textbox stretch-on-mobile" id="exp-2" type="text" placeholder="Wrecktar"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
+            <input class="custom-textbox stretch-on-mobile" id="exp-3" type="text"
+              placeholder="Agropolis Points of Interest" autocomplete="off" inputmode="numeric"
+              onchange="updateScores(combopolis)" readonly>
+            <input class="custom-textbox stretch-on-mobile" id="exp-4" type="text" placeholder="Invasion"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)" readonly>
+            <input class="custom-textbox stretch-on-mobile" id="roads" type="text" placeholder="Roads"
+              autocomplete="off" inputmode="numeric" onchange="updateScores(combopolis)">
+          </div>
+        </div>
+        <div class="content-container center-align-content add-top-margin">
+          <div class="custom-tooltip">
+            <span class="tooltiptext" id="clipboard-preview">Clipboard Preview</span>
+            <button class="custom-button custom-button-primary" width=250px
+              onclick="copyToClipboard(copyText, 'Copied scoring to clipboard.', 'Could not copy directly to clipboard. Scoring outputted below for copy/pasting\n' + copyText)">Copy
+              to Clipboard</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </body>
 

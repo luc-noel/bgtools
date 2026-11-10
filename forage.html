@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Forage: Game Randomiser - Luc's Gaming Stuff</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/widgets.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/forage.js"></script>
+    <style>
+        body {
+            background-image: url("img/forage-bg.png");
+            background-repeat: repeat-x;
+            background-position: bottom right 25%;
+            ;
+        }
+
+        .menu-index {
+            color: rgb(255, 255, 255) !important;
+            opacity: 1 !important;
+            font-weight: 700 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu-container"></div>
+    <div class="content-container">
+        <div class="content">
+            <div class="content-table flex-column">
+                <div class="flex-item flex-column">
+                    <img class="image center max-width-400" src="img/forage-logo.png">
+                    <h2 class="text-center">Game Randomiser</h2>
+                    <p class="text-center no-top-margin">Randomises the order of 9 cards for a game of Forage. The
+                        bolded entry is the start card for the round. </p>
+                    <div class="flex-row-center">
+                        <div class="custom-checkbox custom-tooltip">
+                            <span class="tooltiptext">Order the cards so the bottom-most card of the deck will be first
+                                in the list? Makes it easier to build the deck from the bottom up.</span>
+                            <input type="checkbox" id="reverse-cards">
+                            <label for="reverse-cards">Reverse Order</label>
+                        </div>
+                        <div class="custom-checkbox custom-tooltip">
+                            <span class="tooltiptext">Randomise all 18 cards? The first 9 will be used for the first
+                                round and the remaining 9 for the second round.</span>
+                            <input type="checkbox" id="two-rounds">
+                            <label for="use-pnp">Double Rounds</label>
+                        </div>
+                    </div>
+                    <div class="content-container center-align-content add-top-margin">
+                        <button class="custom-button custom-button-primary" width=250px
+                            onclick="randomiseCards()">Randomise Cards</button>
+                    </div>
+                </div>
+                <div class="flex-row">
+                    <div class="flex-item flex-column full-width">
+                        <h3 class="text-center">Round 1</h3>
+                        <div class="custom-table-container center add-top-margin-small">
+                            <table class="custom-table">
+                                <tbody>
+                                    <tr>
+                                        <td class="text-large">Cards</td>
+                                        <td class="text-center" id="card-0">---</td>
+                                        <td class="text-center bg-color-light-gray" id="card-1">---</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

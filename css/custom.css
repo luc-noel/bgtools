@@ -19,6 +19,7 @@
   position: relative;
   display: inline-block;
   opacity: 90%;
+  z-index: 1;
 }
 
 /* Tooltip text */
@@ -36,8 +37,6 @@
   left: 50%;
   bottom: 110%;
   transform: translateX(-50%);
-  /* Centering */
-  z-index: 1;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */

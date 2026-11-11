@@ -2,101 +2,68 @@
 var reverseOrder = true;
 var twoRounds = false;
 
-/* Get game settings, called on page load */
+/* Get game settings, called on page load and value changes */
 function getGameSettings()
 {
     reverseOrder = $('#reverse-order').prop('checked');
     twoRounds = $('#two-rounds').prop('checked');
-    toggleReadonly("round-2", twoRounds);
+    toggleRound(twoRounds);
 }
 
-/* Activate/deactive an expansion for scoring */
-/* Takes the expansion id name and its bool as the input, switches the bool value */
-function toggleReadonly(name, bool)
+/* Changes the second round section to an inactive visual state */
+function toggleRound(bool)
 {
-    bool = !bool;
-
-    if (document.getElementById(name))
+    if (document.getElementById("round-2"))
     {
-        if (bool)
+        if (!bool)
         {
-            document.getElementById(name).setAttribute("readonly", true);
-            document.getElementById(name).value = "";
+            document.getElementById("round-2").style.opacity = 0.5;
+            document.getElementById("copy-round2").setAttribute("disabled", true);
         }
         else
         {
-            document.getElementById(name).removeAttribute("readonly");
+            document.getElementById("round-2").style.opacity = 1.0;
+            document.getElementById("copy-round2").removeAttribute("disabled");
         }
     }
 }
 
-var score = 0;
-var targetScore = 0;
+var round1 = [];
+var round2 = [];
 var copyText = "";
 
-/* Calculate the inputted score and target score */
-/* Then update the fields on the page and clipboard formatter */
-function updateScores(data)
+function randomiseCards()
 {
-    // Check all game settings to update scoring settings
-    getGameSettings();
+    var cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
+    // Empty the exisitng arrays
+    round1 = [];
+    round2 = [];
 
-    targetScore = 0;
-    var totalFees = [0, 0, 0]; // Pigs, cows, chickens
-
-    for (var i = 0; i < goals.length; i++)
+    for (var i = 0; i < 9; i++)
     {
-        targetScore += data[goals[i]].score;
+        // Pick a random number from 0-17
+        var random = Math.floor(Math.random() * (cards.length - 1));
+        // Use the randomly generated number to pull that card value out of the array
+        round1.push(cards[random]);
+        cards.splice(random, 1);
 
-        // Check used only for Agropolis Feed Fees scoring variant
-        // Adds the livestock counts from the bottom of goal cards together
-        if (useFeedFees)
-        {
-            for (var ii = 0; ii < totalFees.length; ii++)
-            {
-                totalFees[ii] += data[goals[i]].livestock[ii];
-            }
-        }
+        // Now fill in the appropriate text box
+        // TODO: actually this has to happen after the whole round is filled to be able to flip it...
+        document.getElementById("card-1-" + i).textContent = random;
     }
 
-    if (useFeedFees)
+    // If playing two rounds do it again with the remaining values
+    /*if (twoRounds)
     {
-        for (var i = 0; i < goals.length; i++)
+        for (var i = 0; i < 9; i++)
         {
-            if (data[goals[i]].fee > -1)
-            {
-                // Add the livestock fees value based on the fees index (0 = pig, 1 = cow, 2 = chicken)
-                targetScore += totalFees[data[goals[i]].fee];
-            }
+            // Pick a random number from 0-17
+            var random = Math.floor(Math.random() * (cards.length - 1));
+            // Use the randomly generated number to pull that card value out of the array
+            round1.push(cards[random]);
+            cards.splice(random, 1);
         }
-    }
-
-    tallyScore();
-    copyText = formatText(data);
-
-    if (usePar)
-    {
-        if (score < 0)
-        {
-            document.getElementById("score").style.color = "red";
-        }
-        else if (score > 0)
-        {
-            document.getElementById("score").style.color = "lime";
-        }
-        else
-        {
-            document.getElementById("score").style.color = null;
-        }
-        // In par scoring the target score is already subtracted out during tallyScore()
-        document.getElementById("score").innerHTML = score;
-    }
-    else
-    {
-        document.getElementById("score").style.color = null;
-        document.getElementById("score").innerHTML = score + "/" + targetScore;
-    }
-    document.getElementById("clipboard-preview").innerText = "Clipboard Preview:\n" + copyText;
+    }*/
 }
 
 /* Formats the final text based on the inputs */

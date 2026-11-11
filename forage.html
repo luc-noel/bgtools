@@ -17,6 +17,12 @@
     <script src="js/widgets.js"></script>
     <script src="js/custom.js"></script>
     <script src="js/forage.js"></script>
+    <script>
+        window.onload = function ()
+        {
+            getGameSettings();
+        }
+    </script>
     <style>
         body {
             background-image: url("img/forage-bg.png");
@@ -48,13 +54,13 @@
                         <div class="custom-checkbox custom-tooltip">
                             <span class="tooltiptext">Order the cards so the bottom-most card of the deck will be first
                                 in the list? Makes it easier to build the deck from the bottom up.</span>
-                            <input type="checkbox" id="reverse-order">
-                            <label for="reverse-cards">Reverse Order</label>
+                            <input type="checkbox" id="reverse-order" onchange="getGameSettings()">
+                            <label for="reverse-order">Reverse Order</label>
                         </div>
                         <div class="custom-checkbox custom-tooltip">
                             <span class="tooltiptext">Randomise all 18 cards? The first 9 will be used for the first
                                 round and the remaining 9 for the second round.</span>
-                            <input type="checkbox" id="two-rounds">
+                            <input type="checkbox" id="two-rounds" onchange="getGameSettings()">
                             <label for="two-rounds">Both Rounds</label>
                         </div>
                     </div>
@@ -85,7 +91,6 @@
                             </table>
                             <div class="content-container center-align-content add-top-margin">
                                 <div class="custom-tooltip">
-                                    <span class="tooltiptext" id="clipboard-1">Copy Game</span>
                                     <button class="custom-button custom-button-primary" width=250px
                                         onclick="copyToClipboard(copyText, 'Copied game order to clipboard.', 'Could not copy directly to clipboard. Scoring outputted below for copy/pasting\n' + copyText)">Copy
                                         Game</button>
@@ -116,10 +121,9 @@
                             </table>
                             <div class="content-container center-align-content add-top-margin">
                                 <div class="custom-tooltip">
-                                    <span class="tooltiptext" id="clipboard-2">Copy Game</span>
-                                    <button class="custom-button custom-button-primary" width=250px
-                                        onclick="copyToClipboard(copyText, 'Copied game order to clipboard.', 'Could not copy directly to clipboard. Scoring outputted below for copy/pasting\n' + copyText)">Copy
-                                        Game</button>
+                                    <button id="copy-round2" class="custom-button custom-button-primary" width=250px
+                                        onclick="copyToClipboard(copyText, 'Copied card order to clipboard.', 'Could not copy directly to clipboard. Scoring outputted below for copy/pasting\n' + copyText)"
+                                        disabled>Copy Game</button>
                                 </div>
                             </div>
                         </div>

@@ -49,7 +49,7 @@ function randomiseCards()
 
         // Now fill in the appropriate text box
         // TODO: actually this has to happen after the whole round is filled to be able to flip it...
-        document.getElementById("card-1-" + i).textContent = random;
+        document.getElementById("card-1-" + i).textContent = round1[i];
     }
 
     // If playing two rounds do it again with the remaining values

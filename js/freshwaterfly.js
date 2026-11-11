@@ -13,9 +13,7 @@ function rollStrikeDeck()
 
     // Reshuffle cards if all have been drawn
     if (drawCount > 4)
-    {  
         resetStrikeDeck();
-    }
     else
     {
         var roll = Math.floor(Math.random() * cards.length);
@@ -31,9 +29,7 @@ function rollStrikeDeck()
     }
 
     if (drawCount > 1)
-    {
         displayDrawnStrike(drawCount);
-    }
 }
 
 // Displays the previously drawn strikes
@@ -42,13 +38,10 @@ function displayDrawnStrike(index)
     var idString = "strike-" + (index - 1);
 
     if (drawnCards[index - 2])
-    {
         document.getElementById(idString).innerHTML = "O";
-    }
     else if (!drawnCards[index - 2])
-    {
         document.getElementById(idString).innerHTML = "X";
-    }
+
 }
 
 function resetStrikeDeck()

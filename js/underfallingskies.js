@@ -227,9 +227,7 @@ function generateByDifficulty()
     // Check if the difficulty count isn't a whole number
     // If not then the difficulty is a value ending in 0.5
     if (difficultyCount % 1 != 0)
-    {
         starText += "½";
-    }
 
     // Assign tile images
     document.getElementById("tile-vis3").src = "img/" + (randomTiles[3].flipped ? randomTiles[3].image + "-flipped" : randomTiles[3].image) + ".png";
@@ -269,9 +267,7 @@ function randomiseSkyTiles(targetDifficulty)
         for (var i = 0; i < data.tiles.length; i++)
         {
             if (data.tiles[i].height == height)
-            {
                 tiles.push(data.tiles[i]);
-            }
         }
 
         // Choose a single tile for the height
@@ -294,9 +290,7 @@ function randomiseSkyTiles(targetDifficulty)
         // If we got here randomised tiles couldn't attain a high enough value
         // Punt us out of here and let the other generator retry
         if (tileLevels.length == 0)
-        {
             break;
-        }
 
         // When a tile is flipped the difficulty is always 1 higher thant the base star value
         difficulty += 1;

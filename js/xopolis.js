@@ -132,9 +132,7 @@ function getGameSettings()
     }
 
     if (mode == "sprawlopolis")
-    {
         hardMode = $('#use-hard').prop('checked');
-    }
 
     // Sprawlopolis/Combopolis expansions settings
     if (mode != "agropolis" && mode != "naturopolis")
@@ -157,17 +155,13 @@ function getGameSettings()
 
     // Agropolis specific settings
     if (mode == "agropolis")
-    {
         useFeedFees = $('#feed-fees').prop('checked');
-    }
 
     // Naturopolis specific settings
     if (mode == "naturopolis")
     {
         if (!defaultSetting)
-        {
             doubleRoads = $("#double-roads").prop("checked");
-        }
         else
         {
             // Set double roads on by default
@@ -197,9 +191,7 @@ function toggleReadonly(name, bool)
             document.getElementById(name).value = "";
         }
         else
-        {
             document.getElementById(name).removeAttribute("readonly");
-        }
     }
 }
 
@@ -237,10 +229,8 @@ function updateScores(data)
         for (var i = 0; i < goals.length; i++)
         {
             if (data[goals[i]].fee > -1)
-            {
                 // Add the livestock fees value based on the fees index (0 = pig, 1 = cow, 2 = chicken)
                 targetScore += totalFees[data[goals[i]].fee];
-            }
         }
     }
 
@@ -250,17 +240,11 @@ function updateScores(data)
     if (usePar)
     {
         if (score < 0)
-        {
             document.getElementById("score").style.color = "red";
-        }
         else if (score > 0)
-        {
             document.getElementById("score").style.color = "lime";
-        }
         else
-        {
             document.getElementById("score").style.color = null;
-        }
         // In par scoring the target score is already subtracted out during tallyScore()
         document.getElementById("score").innerHTML = score;
     }
@@ -301,19 +285,13 @@ function setGoalDropdowns(data)
         {
             // Combopolis goals are stored only in the first 6 index (0-5)
             if (i < 6)
-            {
                 combopolisItems += '<option value="' + i + '">' + combopolis[i].name + '</option>';
-            }
             // Sprawlopolis goals are stored in the next 18 indexes (6-23)
             else if (i < 24)
-            {
                 sprawloplisItems += '<option value="' + i + '">' + combopolis[i].name + '</option>';
-            }
             // The last 18 indexes are all Agropolis cards
             else
-            {
                 agropolisItems += '<option value="' + i + '">' + combopolis[i].name + '</option>';
-            }
         }
 
         document.getElementById("goals-1").innerHTML = sprawloplisItems;
@@ -351,17 +329,11 @@ function formatText(data)
         text += score;
 
         if (useFeedFees)
-        {
             text += "\nFeed Fees";
-        }
         if (hardMode)
-        {
             text += "\nHard Mode";
-        }
         if (easyMode)
-        {
             text += "\nEasy Mode";
-        }
 
         text += "\n\n";
     }
@@ -370,17 +342,11 @@ function formatText(data)
         text += score + "/" + targetScore;
 
         if (useFeedFees)
-        {
             text += "\nFeed Fees";
-        }
         if (hardMode)
-        {
             text += "\nHard Mode";
-        }
         if (easyMode)
-        {
             text += "\nEasy Mode";
-        }
 
         text += "\n\n";
     }
@@ -392,13 +358,9 @@ function formatText(data)
     if (mode != "agropolis" && mode != "naturopolis")
     {
         if (useBeaches)
-        {
             text += sprawlopolisBeaches[beachesGoal].name + ": " + sanitiseNumbers(document.getElementById("beaches-score").value) + "\n";
-        }
         if (useZone)
-        {
             text += sprawlopolisConstruction[zoneGoal].name + ": " + sanitiseNumbers(document.getElementById("zone-score").value) + "\n";
-        }
     }
 
     if (mode == "combopolis")
@@ -451,38 +413,24 @@ function formatText(data)
     }
 
     if (useExp1)
-    {
         text += document.getElementById("exp-1").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-1").value) + "\n";
-    }
     if (useExp2)
-    {
         text += document.getElementById("exp-2").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-2").value) + "\n";
-    }
     if (useExp3)
-    {
         text += document.getElementById("exp-3").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-3").value) + "\n";
-    }
     if (useExp4)
-    {
         text += document.getElementById("exp-4").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-4").value) + "\n";
-    }
 
     // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
     var roads = Math.abs(sanitiseNumbers(document.getElementById('roads').value));
 
-    // Naturopolis roads a worth -2 points, auto-deduct if the user selected the option
+    // Naturopolis roads are worth -2 points, auto-deduct if the user selected the option
     if (doubleRoads)
-    {
         roads += roads;
-    }
     if (!easyMode)
-    {
         text += "Roads: -" + roads;
-    }
     else
-    {
         text += "Roads: (-" + roads + ")";
-    }
 
     return text;
 }
@@ -521,32 +469,20 @@ function tallyScore()
     }
 
     if (useExp1)
-    {
         score += sanitiseNumbers(document.getElementById("exp-1").value);
-    }
     if (useExp2)
-    {
         score += sanitiseNumbers(document.getElementById("exp-2").value);
-    }
     if (useExp3)
-    {
         score += sanitiseNumbers(document.getElementById("exp-3").value);
-    }
     if (useExp4)
-    {
         score += sanitiseNumbers(document.getElementById("exp-4").value);
-    }
 
     if (mode != "agropolis" && mode != "naturopolis")
     {
         if (useBeaches)
-        {
             score += sanitiseNumbers(document.getElementById("beaches-score").value);
-        }
         if (useZone)
-        {
             score += sanitiseNumbers(document.getElementById("zone-score").value);
-        }
     }
 
     // Road scoring
@@ -557,15 +493,11 @@ function tallyScore()
 
         // Roads in Naturopolis are worth -2, so we deduct again
         if (doubleRoads)
-        {
             score -= Math.abs(sanitiseNumbers(document.getElementById('roads').value));
-        };
     }
 
     if (usePar)
-    {
         score -= targetScore;
-    }
 }
 
 /* For Combopolis, sorts out the 4 highest value blocks only */
@@ -601,9 +533,7 @@ function sanitiseNumbers(input)
     var output = 0;
 
     if (input)
-    {
         output = input.replace(/(?!^-)[^0-9]/g, '');
-    }
 
     return parseInt(output);
 }

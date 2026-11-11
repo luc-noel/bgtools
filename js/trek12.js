@@ -34,13 +34,11 @@ function generateExpedition()
         map1.push("Jampa");
         map2.push("Dechen");
         map3.push("Wangchuk");
-    };
+    }
 
     // Add PnP maps if toggled on
     if (usePnP)
-    {
         map1.push("Philitrek");
-    };
 
     // Randomise maps and update page text
     document.getElementById("map-1").innerHTML = map1[Math.floor(Math.random() * map1.length)];
@@ -57,9 +55,7 @@ function generateExpedition()
 
         // Add expansion AIs if toggled on
         if (useExpansion)
-        {
             AIs.push("Dechen", "Wangchuk", "Karma");
-        };
 
         // Randomise AI and update page text
         AI = AIs[Math.floor(Math.random() * AIs.length)]
@@ -72,9 +68,7 @@ function generateExpedition()
 
         // Add expansion guides if toggled on
         if (useExpansion)
-        {
             guides.push("Dechen", "Wangchuk", "Karma");
-        };
 
         // Search the guides for a name matching the chosen AI
         // Remove it if found to avoid duplication
@@ -90,7 +84,7 @@ function generateExpedition()
         // Randomise guide for player
         var guide = Math.floor(Math.random() * guides.length);
         document.getElementById("guide-1").innerHTML = guides[guide];
-        
+
         // Remove player's guide from the options to avoid duplication
         guides.splice(guide, 1);
 

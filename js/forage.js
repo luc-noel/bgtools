@@ -42,9 +42,13 @@ function randomiseCards()
     for (var i = 0; i < 9; i++)
     {
         // Pick a random number from 0-17
-        var random = Math.floor(Math.random() * (cards.length - 1));
+        var random = Math.floor(Math.random() * cards.length);
         // Use the randomly generated number to pull that card value out of the array
         round1.push(cards[random]);
+        cards.splice(random, 1);
+
+        random = Math.floor(Math.random() * cards.length);
+        round2.push(cards[random]);
         cards.splice(random, 1);
 
         // Now fill in the appropriate text box
@@ -71,144 +75,7 @@ function formatText(data)
 {
     var text = "";
 
-    if (usePar)
-    {
-        // In par scoring the target score is already subtracted out during tallyScore()
-        text += score;
 
-        if (useFeedFees)
-        {
-            text += "\nFeed Fees";
-        }
-        if (hardMode)
-        {
-            text += "\nHard Mode";
-        }
-        if (easyMode)
-        {
-            text += "\nEasy Mode";
-        }
-
-        text += "\n\n";
-    }
-    else
-    {
-        text += score + "/" + targetScore;
-
-        if (useFeedFees)
-        {
-            text += "\nFeed Fees";
-        }
-        if (hardMode)
-        {
-            text += "\nHard Mode";
-        }
-        if (easyMode)
-        {
-            text += "\nEasy Mode";
-        }
-
-        text += "\n\n";
-    }
-    text += data[goals[0]].name + ": " + sanitiseNumbers(document.getElementById("goal-1-score").value) + "\n";
-    text += data[goals[1]].name + ": " + sanitiseNumbers(document.getElementById("goal-2-score").value) + "\n";
-    text += data[goals[2]].name + ": " + sanitiseNumbers(document.getElementById("goal-3-score").value) + "\n";
-
-    // Sprawlopolis expansion scores
-    if (mode != "agropolis" && mode != "naturopolis")
-    {
-        if (useBeaches)
-        {
-            text += sprawlopolisBeaches[beachesGoal].name + ": " + sanitiseNumbers(document.getElementById("beaches-score").value) + "\n";
-        }
-        if (useZone)
-        {
-            text += sprawlopolisConstruction[zoneGoal].name + ": " + sanitiseNumbers(document.getElementById("zone-score").value) + "\n";
-        }
-    }
-
-    if (mode == "combopolis")
-    {
-        var highBlocks = sortHighestBlocks();
-
-        if (perBlock)
-        {
-            text += document.getElementById(highBlocks[0].id).getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById(highBlocks[0].id).value) + "\n";
-            text += document.getElementById(highBlocks[1].id).getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById(highBlocks[1].id).value) + "\n";
-            text += document.getElementById(highBlocks[2].id).getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById(highBlocks[2].id).value) + "\n";
-            text += document.getElementById(highBlocks[3].id).getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById(highBlocks[3].id).value) + "\n";
-        }
-        else
-        {
-            text += "Blocks: " + (sanitiseNumbers(document.getElementById(highBlocks[0].id).value)
-                + sanitiseNumbers(document.getElementById(highBlocks[1].id).value)
-                + sanitiseNumbers(document.getElementById(highBlocks[2].id).value)
-                + sanitiseNumbers(document.getElementById(highBlocks[3].id).value)) + "\n";
-        }
-    }
-    else
-    {
-        if (hardMode)
-        {
-            var blocks = [document.getElementById('blocks-1'), document.getElementById('blocks-2'),
-            document.getElementById('blocks-3'), document.getElementById('blocks-4')];
-
-            var sorted = blocks.sort(function (a, b)
-            {
-                return (sanitiseNumbers(b.value) - sanitiseNumbers(a.value));
-            });
-
-            text += sorted[0].getAttribute("placeholder") + ": " + sanitiseNumbers(sorted[0].value) + "\n";
-        }
-        else if (perBlock)
-        {
-            text += document.getElementById("blocks-1").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById('blocks-1').value) + "\n";
-            text += document.getElementById("blocks-2").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById('blocks-2').value) + "\n";
-            text += document.getElementById("blocks-3").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById('blocks-3').value) + "\n";
-            text += document.getElementById("blocks-4").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById('blocks-4').value) + "\n";
-        }
-        else
-        {
-            text += "Blocks: " + (sanitiseNumbers(document.getElementById('blocks-1').value)
-                + sanitiseNumbers(document.getElementById('blocks-2').value)
-                + sanitiseNumbers(document.getElementById('blocks-3').value)
-                + sanitiseNumbers(document.getElementById('blocks-4').value)) + "\n";
-        }
-    }
-
-    if (useExp1)
-    {
-        text += document.getElementById("exp-1").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-1").value) + "\n";
-    }
-    if (useExp2)
-    {
-        text += document.getElementById("exp-2").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-2").value) + "\n";
-    }
-    if (useExp3)
-    {
-        text += document.getElementById("exp-3").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-3").value) + "\n";
-    }
-    if (useExp4)
-    {
-        text += document.getElementById("exp-4").getAttribute("placeholder") + ": " + sanitiseNumbers(document.getElementById("exp-4").value) + "\n";
-    }
-
-    // Regardless of if the user inputted the score as a positive or negative number we sanitise it to a positive number for consistency
-    var roads = Math.abs(sanitiseNumbers(document.getElementById('roads').value));
-
-    // Naturopolis roads a worth -2 points, auto-deduct if the user selected the option
-    if (doubleRoads)
-    {
-        roads += roads;
-    }
-    if (!easyMode)
-    {
-        text += "Roads: -" + roads;
-    }
-    else
-    {
-        text += "Roads: (-" + roads + ")";
-    }
 
     return text;
 }
